@@ -1,0 +1,68 @@
+[gd_scene load_steps=27 format=2]
+
+[ext_resource path="res://charactors/small_dragon/Attack2.png" type="Texture" id=1]
+[ext_resource path="res://charactors/small_dragon/Fire_Attack4.png" type="Texture" id=2]
+[ext_resource path="res://charactors/small_dragon/Hurt1.png" type="Texture" id=3]
+[ext_resource path="res://charactors/small_dragon/Walk1.png" type="Texture" id=4]
+[ext_resource path="res://charactors/small_dragon/Fire_Attack5.png" type="Texture" id=5]
+[ext_resource path="res://charactors/small_dragon/Fire_Attack3.png" type="Texture" id=6]
+[ext_resource path="res://charactors/small_dragon/Death4.png" type="Texture" id=7]
+[ext_resource path="res://charactors/small_dragon/Fire_Attack9.png" type="Texture" id=8]
+[ext_resource path="res://charactors/small_dragon/Idle1.png" type="Texture" id=9]
+[ext_resource path="res://charactors/small_dragon/Walk4.png" type="Texture" id=10]
+[ext_resource path="res://charactors/small_dragon/Fire_Attack7.png" type="Texture" id=11]
+[ext_resource path="res://charactors/small_dragon/Walk3.png" type="Texture" id=12]
+[ext_resource path="res://charactors/small_dragon/Death2.png" type="Texture" id=13]
+[ext_resource path="res://charactors/small_dragon/Hurt2.png" type="Texture" id=14]
+[ext_resource path="res://charactors/small_dragon/Fire_Attack8.png" type="Texture" id=15]
+[ext_resource path="res://charactors/small_dragon/Idle3.png" type="Texture" id=16]
+[ext_resource path="res://charactors/small_dragon/Idle2.png" type="Texture" id=17]
+[ext_resource path="res://charactors/small_dragon/Walk2.png" type="Texture" id=18]
+[ext_resource path="res://charactors/small_dragon/Death1.png" type="Texture" id=19]
+[ext_resource path="res://charactors/small_dragon/Attack3.png" type="Texture" id=20]
+[ext_resource path="res://charactors/small_dragon/Attack1.png" type="Texture" id=21]
+[ext_resource path="res://charactors/small_dragon/Fire_Attack2.png" type="Texture" id=22]
+[ext_resource path="res://charactors/small_dragon/Fire_Attack1.png" type="Texture" id=23]
+[ext_resource path="res://charactors/small_dragon/Fire_Attack6.png" type="Texture" id=24]
+[ext_resource path="res://charactors/small_dragon/Death3.png" type="Texture" id=25]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 19 ), ExtResource( 13 ), ExtResource( 25 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "Death",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 17 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 21 ), ExtResource( 1 ), ExtResource( 20 ) ],
+"loop": true,
+"name": "Attack",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "Hurt",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 18 ), ExtResource( 12 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "Walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 23 ), ExtResource( 22 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 5 ), ExtResource( 24 ), ExtResource( 11 ), ExtResource( 15 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "FireAttack",
+"speed": 5.0
+} ]
+
+[node name="SmallDragon" type="Node2D"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "Death"
+frame = 1
+playing = true

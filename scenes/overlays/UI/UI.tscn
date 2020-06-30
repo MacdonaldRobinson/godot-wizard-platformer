@@ -1,0 +1,89 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://themes/custom_theme.tres" type="Theme" id=1]
+[ext_resource path="res://textures/ui/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_12.png" type="Texture" id=2]
+[ext_resource path="res://textures/ui/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_11.png" type="Texture" id=3]
+[ext_resource path="res://textures/ui/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_13.png" type="Texture" id=4]
+[ext_resource path="res://scenes/overlays/UI/UI.gd" type="Script" id=5]
+
+[node name="UI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_right = 984.0
+margin_bottom = 55.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBar" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+margin_right = 490.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/HBoxContainer/HealthBar"]
+margin_right = 56.0
+margin_bottom = 50.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 2 )
+
+[node name="HealthProgress" type="TextureProgress" parent="MarginContainer/HBoxContainer/HealthBar"]
+margin_left = 60.0
+margin_right = 325.0
+margin_bottom = 47.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+value = 100.0
+texture_progress = ExtResource( 3 )
+
+[node name="OrbsCollected" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+margin_left = 494.0
+margin_right = 984.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/OrbsCollected"]
+margin_left = 364.0
+margin_right = 420.0
+margin_bottom = 55.0
+texture = ExtResource( 4 )
+
+[node name="X" type="Label" parent="MarginContainer/HBoxContainer/OrbsCollected"]
+margin_left = 424.0
+margin_top = 5.0
+margin_right = 450.0
+margin_bottom = 49.0
+text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OrbNumber" type="Label" parent="MarginContainer/HBoxContainer/OrbsCollected"]
+margin_left = 454.0
+margin_top = 5.0
+margin_right = 490.0
+margin_bottom = 49.0
+text = "10"
