@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/dropLeather.ogg-261fde62cddc0b4672cbba24ec483693.oggstr"
+
+[deps]
+
+source_file="res://audio/kenney_rpgaudio/Audio/dropLeather.ogg"
+dest_files=[ "res://.import/dropLeather.ogg-261fde62cddc0b4672cbba24ec483693.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

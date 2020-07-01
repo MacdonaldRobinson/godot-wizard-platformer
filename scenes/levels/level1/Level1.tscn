@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://scenes/levels/level1/Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://backgrounds/parallax backgound pack/_09_distant_clouds1.png" type="Texture" id=2]
@@ -19,11 +19,17 @@
 [ext_resource path="res://scenes/overlays/UI/UI.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/collectables/Orb.tscn" type="PackedScene" id=18]
 
+[sub_resource type="Environment" id=1]
+background_mode = 4
+glow_enabled = true
+glow_blend_mode = 0
+glow_bicubic_upscale = true
+
 [node name="Level1" type="Node2D"]
 script = ExtResource( 14 )
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-position = Vector2( 0, -1 )
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
 
 [node name="BackgroundLayers" type="CanvasLayer" parent="."]
 
@@ -123,32 +129,28 @@ tile_data = PoolIntArray( 68, 0, 0, 69, 0, 0, 70, 0, 0, 71, 0, 0, 262197, 0, 0, 
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="Demon" parent="Enemies" groups=[
-"enemy",
-] instance=ExtResource( 16 )]
+[node name="Demon" parent="Enemies" instance=ExtResource( 16 )]
 position = Vector2( 393.672, 531.78 )
 
-[node name="Demon2" parent="Enemies" groups=[
-"enemy",
-] instance=ExtResource( 16 )]
+[node name="Demon2" parent="Enemies" instance=ExtResource( 16 )]
 position = Vector2( 2612.86, 111.119 )
 
 [node name="Collectables" type="Node2D" parent="."]
 
 [node name="Orb" parent="Collectables" instance=ExtResource( 18 )]
-position = Vector2( 2159.9, 309.225 )
+position = Vector2( 2159.9, 331.225 )
 
 [node name="Orb2" parent="Collectables" instance=ExtResource( 18 )]
-position = Vector2( 2751.23, 118.343 )
+position = Vector2( 2751.23, 140.343 )
 
 [node name="Orb3" parent="Collectables" instance=ExtResource( 18 )]
-position = Vector2( 3342.57, -32.4937 )
+position = Vector2( 3342.57, -10.4937 )
 
 [node name="Orb4" parent="Collectables" instance=ExtResource( 18 )]
-position = Vector2( 3686.96, 88.9767 )
+position = Vector2( 3686.96, 110.977 )
 
 [node name="Orb5" parent="Collectables" instance=ExtResource( 18 )]
-position = Vector2( 3811.1, 341.261 )
+position = Vector2( 3811.1, 363.261 )
 
 [node name="Overlays" type="CanvasLayer" parent="."]
 

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/footstep_snow_003.ogg-802df7034d9f04e7841f2c1202958b7b.oggstr"
+
+[deps]
+
+source_file="res://audio/kenney_impactsounds/Audio/footstep_snow_003.ogg"
+dest_files=[ "res://.import/footstep_snow_003.ogg-802df7034d9f04e7841f2c1202958b7b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

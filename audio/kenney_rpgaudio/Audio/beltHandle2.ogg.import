@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/beltHandle2.ogg-9f6d6b9991f979a241914528a1a48c8a.oggstr"
+
+[deps]
+
+source_file="res://audio/kenney_rpgaudio/Audio/beltHandle2.ogg"
+dest_files=[ "res://.import/beltHandle2.ogg-9f6d6b9991f979a241914528a1a48c8a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

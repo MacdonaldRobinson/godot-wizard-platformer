@@ -4,44 +4,97 @@ onready var body:KinematicBody2D = $KinematicBody2D
 onready var sprite:AnimatedSprite = $KinematicBody2D/AnimatedSprite
 onready var animation_player:AnimationPlayer = $KinematicBody2D/AnimatedSprite/AnimationPlayer
 onready var camera:Camera2D = $KinematicBody2D/Camera2D
+onready var saybox_container:ColorRect = $KinematicBody2D/SayBoxContainer
+onready var saybox:Label = $KinematicBody2D/SayBoxContainer/SayBox
+onready var saybox_timer:Timer = $KinematicBody2D/SayBoxTimer
+onready var saybox_tween:Tween = $KinematicBody2D/SayBoxContainer/Tween
 
-export var smoke_ball = "res://scenes/effects/SmokeBall.tscn"
+onready var weapon_orb_scene = "res://scenes/collectables/Orb.tscn";
 
 var SPEED = 100
 var MAX_SPEED = 500
 var new_position = Vector2(0, 0)
 var is_attacking = false
-var smoke_balls = []
-var smoke_ball_is_flipped_h = false
+var projectiles = []
+var projectile_is_flipped_h = false
 var taking_damage = false
 
-func _ready():
-	pass # Replace with function body.
 
+func say(text:String):
+	saybox.text = text	
+	
+	var length = text.length()
+	var duration = 0.05 * length;
+	
+	saybox_timer.wait_time = duration + 2
+	
+	saybox_tween.remove_all()
+	saybox_tween.interpolate_property(saybox, "percent_visible", 0, 1, duration)	
+	saybox_tween.start()
+		
+	saybox_container.show()
+	saybox_timer.start()	
+
+var saybox_original_position
+func _ready():
+	saybox_original_position = saybox_container.rect_position;
+	saybox_container.hide()
+
+func _unhandled_input(event):
+	var run_attack = false		
+	if(event is InputEventAction):		
+		if(event.action == "ui_attack1"):			
+			run_attack = true		
+	
+	if(Input.is_action_just_pressed("ui_attack1") || run_attack):
+		print("Event ran")
+		
+	if((Input.is_action_just_pressed("ui_attack1") || run_attack) && !is_attacking):
+		
+		sprite.play("Attack1")
+		is_attacking = true
+	elif((Input.is_action_just_pressed("ui_attack2") || run_attack) && !is_attacking):
+		sprite.play("Attack2")
+		is_attacking = true		
+
+var saybox_container_flip_h = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(delta):		
 	new_position.y += Global.level_gravity
 	
+	if(sprite.flip_h && !saybox_container_flip_h):
+		saybox_container.rect_position.x  *= -1
+		saybox_container.rect_position.x -= saybox_container.rect_size.x
+		saybox_container_flip_h = true
+	elif !sprite.flip_h && saybox_container_flip_h:
+		saybox_container.rect_position.x  = saybox_original_position.x
+		saybox_container_flip_h = false
+	
+	if(Global.player_saybox_text != "" and Global.player_saybox_text != saybox.text):
+		say(Global.player_saybox_text)
+
 	if taking_damage:
 		Global.player_health -= 1
 		
 	if Global.player_health <=0:
 		Global.player_has_died = true
 	
-	for ball in smoke_balls:	
-		if(ball == null):			
-			smoke_balls.erase(ball)
+	
+	for projectile in projectiles:	
+		if(projectile == null):			
+			projectiles.erase(projectile)
 			
-		if(ball != null):	
-			if(smoke_ball_is_flipped_h):
-				ball.position.x -= 30	
+		if(projectile != null):	
+			if(projectile_is_flipped_h):
+				projectile.position.x -= 30	
 			else:
-				ball.position.x += 30	
-			add_child(ball)		
-						
+				projectile.position.x += 30	
+			add_child(projectile)		
+								
 	
 	if(body.position.y > camera.limit_bottom):
-		Global.player_has_died = true	
+		Global.player_has_died = true
+		set_physics_process(false)
 	
 	var run_animation = "Run"
 	
@@ -49,6 +102,7 @@ func _process(delta):
 		run_animation = "Jump"	
 	if Global.player_has_died:
 		run_animation = "Death"	
+	
 	
 	if(Input.is_action_pressed("ui_left") && !is_attacking):
 		new_position.x -= SPEED
@@ -70,12 +124,6 @@ func _process(delta):
 		new_position.y += SPEED
 		sprite.play("Fall")		
 	
-	if(Input.is_action_just_pressed("ui_attack1") && !is_attacking):
-		sprite.play("Attack1")
-		is_attacking = true
-	elif(Input.is_action_just_pressed("ui_attack2") && !is_attacking):
-		sprite.play("Attack2")
-		is_attacking = true		
 	
 	if(!body.is_on_floor() && !is_attacking ):		
 		if(new_position.y < 0):
@@ -89,21 +137,15 @@ func _process(delta):
 
 func _on_AnimatedSprite_animation_finished():
 	is_attacking = false
-	if(sprite.animation == "Attack2"):
-		var smoke_ball_instance = load(smoke_ball).instance()
-		smoke_ball_instance.position = body.position
-		smoke_balls.append(smoke_ball_instance)
-		
-		smoke_ball_is_flipped_h = sprite.flip_h
 
 
-func _on_HitArea_area_entered(area):
-	var owner = area.get_owner()
-	if(owner.is_in_group("enemy")):
+func _on_HitArea_area_entered(area):	
+	var owner = area.get_owner()	
+	if(owner.is_in_group("enemy") && !owner.is_dead):
 		print("enemy entered")
 		taking_damage = true
 	else:
-		if(owner.is_in_group("orb")):
+		if(owner.is_in_group("orb") && !owner.is_weapon_mode):
 			Global.orbs_collected += 1
 
 
@@ -112,3 +154,28 @@ func _on_HitArea_area_exited(area):
 	if(owner !=null && owner.is_in_group("enemy")):
 		print("enemy exited")
 		taking_damage = false
+
+
+func _on_Timer_timeout():
+	print("Ran timer")
+	saybox_container.hide()
+	saybox_timer.stop()
+
+
+func _on_SayBoxContainer_visibility_changed():
+	print("visibility changed")
+	if(saybox_container.visible):
+		saybox_timer.start()
+
+
+func _on_AnimatedSprite_frame_changed():
+	if(sprite.animation == "Attack1" && sprite.get_frame() == 5 && Global.orbs_collected > 0):
+		var weapon_orb_scene_instance = load(weapon_orb_scene).instance()
+		weapon_orb_scene_instance.is_weapon_mode = true
+		weapon_orb_scene_instance.position = body.position
+		weapon_orb_scene_instance.position.x += 30
+		weapon_orb_scene_instance.position.y -= 20
+		projectiles.append(weapon_orb_scene_instance)		
+		projectile_is_flipped_h = sprite.flip_h
+		Global.orbs_collected -=1
+		

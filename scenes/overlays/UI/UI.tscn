@@ -1,10 +1,21 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://themes/custom_theme.tres" type="Theme" id=1]
 [ext_resource path="res://textures/ui/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_12.png" type="Texture" id=2]
 [ext_resource path="res://textures/ui/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_11.png" type="Texture" id=3]
 [ext_resource path="res://textures/ui/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_13.png" type="Texture" id=4]
 [ext_resource path="res://scenes/overlays/UI/UI.gd" type="Script" id=5]
+[ext_resource path="res://fonts/GenghisKhan.otf" type="DynamicFontData" id=6]
+[ext_resource path="res://textures/ui/uipack_fixed/PNG/red_button07.png" type="Texture" id=7]
+[ext_resource path="res://textures/ui/uipack_fixed/PNG/grey_button07.png" type="Texture" id=8]
+[ext_resource path="res://fonts/UIButtonFont.tres" type="DynamicFont" id=9]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 6 )
 
 [node name="UI" type="Control"]
 anchor_right = 1.0
@@ -17,36 +28,43 @@ __meta__ = {
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
+anchor_bottom = 1.0
 margin_left = 20.0
 margin_top = 20.0
 margin_right = -20.0
+margin_bottom = -20.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_right = 984.0
+margin_bottom = 560.0
+
+[node name="TopBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 margin_right = 984.0
 margin_bottom = 55.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HealthBar" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
-margin_right = 490.0
-margin_bottom = 55.0
+[node name="HealthBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TopBar"]
+margin_right = 870.0
+margin_bottom = 50.0
 size_flags_horizontal = 3
+size_flags_vertical = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect2" type="TextureRect" parent="MarginContainer/HBoxContainer/HealthBar"]
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/VBoxContainer/TopBar/HealthBar"]
 margin_right = 56.0
 margin_bottom = 50.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 texture = ExtResource( 2 )
 
-[node name="HealthProgress" type="TextureProgress" parent="MarginContainer/HBoxContainer/HealthBar"]
+[node name="HealthProgress" type="TextureProgress" parent="MarginContainer/VBoxContainer/TopBar/HealthBar"]
 margin_left = 60.0
 margin_right = 325.0
 margin_bottom = 47.0
@@ -55,35 +73,99 @@ size_flags_vertical = 0
 value = 100.0
 texture_progress = ExtResource( 3 )
 
-[node name="OrbsCollected" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
-margin_left = 494.0
+[node name="OrbsCollected" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TopBar"]
+margin_left = 874.0
 margin_right = 984.0
 margin_bottom = 55.0
-size_flags_horizontal = 3
+size_flags_vertical = 0
 alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/OrbsCollected"]
-margin_left = 364.0
-margin_right = 420.0
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/TopBar/OrbsCollected"]
+margin_right = 56.0
 margin_bottom = 55.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 texture = ExtResource( 4 )
 
-[node name="X" type="Label" parent="MarginContainer/HBoxContainer/OrbsCollected"]
-margin_left = 424.0
-margin_top = 5.0
-margin_right = 450.0
-margin_bottom = 49.0
+[node name="X" type="Label" parent="MarginContainer/VBoxContainer/TopBar/OrbsCollected"]
+margin_left = 60.0
+margin_right = 71.0
+margin_bottom = 55.0
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 1 )
 text = "X"
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="OrbNumber" type="Label" parent="MarginContainer/HBoxContainer/OrbsCollected"]
-margin_left = 454.0
-margin_top = 5.0
-margin_right = 490.0
-margin_bottom = 49.0
+[node name="OrbNumber" type="Label" parent="MarginContainer/VBoxContainer/TopBar/OrbsCollected"]
+margin_left = 75.0
+margin_right = 110.0
+margin_bottom = 55.0
+size_flags_vertical = 1
 text = "10"
+valign = 1
+
+[node name="BottomBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 511.0
+margin_right = 984.0
+margin_bottom = 560.0
+size_flags_vertical = 10
+
+[node name="SayBox" type="LineEdit" parent="MarginContainer/VBoxContainer/BottomBar"]
+margin_top = 23.0
+margin_right = 200.0
+margin_bottom = 49.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 8
+size_flags_vertical = 8
+custom_fonts/font = SubResource( 2 )
+placeholder_text = "Say Something ..."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/BottomBar"]
+margin_left = 204.0
+margin_right = 984.0
+margin_bottom = 49.0
+size_flags_horizontal = 3
+columns = 2
+
+[node name="Spacer" type="Label" parent="MarginContainer/VBoxContainer/BottomBar/GridContainer"]
+margin_top = 3.0
+margin_right = 200.0
+margin_bottom = 46.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="Attack1" type="TextureButton" parent="MarginContainer/VBoxContainer/BottomBar/GridContainer"]
+margin_left = 204.0
+margin_right = 253.0
+margin_bottom = 49.0
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/BottomBar/GridContainer/Attack1"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+custom_fonts/font = ExtResource( 9 )
+custom_colors/font_color = Color( 0.584314, 0.203922, 1, 1 )
+text = "1"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ResetTimer" type="Timer" parent="."]
+wait_time = 0.5
+[connection signal="text_entered" from="MarginContainer/VBoxContainer/BottomBar/SayBox" to="." method="_on_SayBox_text_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BottomBar/GridContainer/Attack1" to="." method="_on_Attack1_pressed"]
+[connection signal="timeout" from="ResetTimer" to="." method="_on_ResetTimer_timeout"]
