@@ -278,7 +278,7 @@ __meta__ = {
 position = Vector2( 7.49153, -4.12035 )
 frames = SubResource( 43 )
 animation = "Attack2"
-frame = 5
+frame = 1
 playing = true
 __meta__ = {
 "_edit_lock_": true

@@ -2,7 +2,6 @@ extends Node2D
 
 onready var body:KinematicBody2D = $KinematicBody2D
 onready var sprite:AnimatedSprite = $KinematicBody2D/AnimatedSprite
-onready var animation_player:AnimationPlayer = $KinematicBody2D/AnimatedSprite/AnimationPlayer
 onready var camera:Camera2D = $KinematicBody2D/Camera2D
 onready var saybox_container:ColorRect = $KinematicBody2D/SayBoxContainer
 onready var saybox:Label = $KinematicBody2D/SayBoxContainer/SayBox
@@ -80,17 +79,16 @@ func _physics_process(delta):
 		Global.player_has_died = true
 	
 	
-	for projectile in projectiles:	
+	for projectile in projectiles:			
 		if(projectile == null):			
 			projectiles.erase(projectile)
-			
+
 		if(projectile != null):	
 			if(projectile_is_flipped_h):
 				projectile.position.x -= 30	
 			else:
-				projectile.position.x += 30	
-			add_child(projectile)		
-								
+				projectile.position.x += 30					
+			
 	
 	if(body.position.y > camera.limit_bottom):
 		Global.player_has_died = true
@@ -175,7 +173,9 @@ func _on_AnimatedSprite_frame_changed():
 		weapon_orb_scene_instance.position = body.position
 		weapon_orb_scene_instance.position.x += 30
 		weapon_orb_scene_instance.position.y -= 20
-		projectiles.append(weapon_orb_scene_instance)		
 		projectile_is_flipped_h = sprite.flip_h
+		projectiles.append(weapon_orb_scene_instance)	
+		add_child(weapon_orb_scene_instance)
+			
 		Global.orbs_collected -=1
 		
