@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/you_win.ogg-516a28e1e25fab8fd198c9e37d78a2b6.oggstr"
+
+[deps]
+
+source_file="res://audio/voice/kenney_voiceoverfighter/Audio/you_win.ogg"
+dest_files=[ "res://.import/you_win.ogg-516a28e1e25fab8fd198c9e37d78a2b6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

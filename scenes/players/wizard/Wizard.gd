@@ -7,8 +7,10 @@ onready var saybox_container:ColorRect = $KinematicBody2D/SayBoxContainer
 onready var saybox:Label = $KinematicBody2D/SayBoxContainer/SayBox
 onready var saybox_timer:Timer = $KinematicBody2D/SayBoxTimer
 onready var saybox_tween:Tween = $KinematicBody2D/SayBoxContainer/Tween
+onready var health_bar:TextureProgress = $KinematicBody2D/HealthBar
+onready var hit_area:Area2D = $KinematicBody2D/HitArea
 
-onready var weapon_orb_scene = "res://scenes/collectables/Orb.tscn";
+onready var weapon_orb_scene = "res://scenes/collectables/orb/Orb.tscn";
 
 var SPEED = 100
 var MAX_SPEED = 500
@@ -58,7 +60,14 @@ func _unhandled_input(event):
 
 var saybox_container_flip_h = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):		
+func _physics_process(delta):	
+	
+	for node in hit_area.get_overlapping_areas():
+		print(node)
+		
+	var snap = Vector2(0, 32)
+	
+	health_bar.value = Global.player_health
 	new_position.y += Global.level_gravity
 	
 	if(sprite.flip_h && !saybox_container_flip_h):
@@ -84,6 +93,7 @@ func _physics_process(delta):
 			projectiles.erase(projectile)
 
 		if(projectile != null):	
+			print(projectile_is_flipped_h)
 			if(projectile_is_flipped_h):
 				projectile.position.x -= 30	
 			else:
@@ -99,10 +109,9 @@ func _physics_process(delta):
 	if (!body.is_on_floor()):
 		run_animation = "Jump"	
 	if Global.player_has_died:
-		run_animation = "Death"	
+		run_animation = "Death"		
 	
-	
-	if(Input.is_action_pressed("ui_left") && !is_attacking):
+	if(Input.is_action_pressed("ui_left") && !is_attacking):		
 		new_position.x -= SPEED
 		sprite.flip_h = true
 		sprite.play(run_animation)
@@ -112,12 +121,12 @@ func _physics_process(delta):
 		sprite.play(run_animation)		
 	else:
 		if(body.is_on_floor() && !is_attacking):
-			sprite.play("Idle")
-			
+			sprite.play("Idle")			
 		
 	if(Input.is_action_pressed("ui_up") && body.is_on_floor()):
 		new_position.y -= SPEED	* 5
 		sprite.play("Jump")
+		snap.y = 0
 	elif(Input.is_action_pressed("ui_down") && !body.is_on_floor()):
 		new_position.y += SPEED
 		sprite.play("Fall")		
@@ -129,8 +138,8 @@ func _physics_process(delta):
 		else:
 			sprite.play("Fall")	
 			
-	new_position.x = lerp(new_position.x, 0, 0.1) 					
-	new_position = body.move_and_slide(new_position, Vector2(0, -1))	
+	new_position.x = lerp(new_position.x, 0, 0.1) 		
+	new_position = body.move_and_slide_with_snap(new_position, snap, Vector2.UP)	
 
 
 func _on_AnimatedSprite_animation_finished():
@@ -168,12 +177,18 @@ func _on_SayBoxContainer_visibility_changed():
 
 func _on_AnimatedSprite_frame_changed():
 	if(sprite.animation == "Attack1" && sprite.get_frame() == 5 && Global.orbs_collected > 0):
+		projectile_is_flipped_h = sprite.flip_h
+		
 		var weapon_orb_scene_instance = load(weapon_orb_scene).instance()
 		weapon_orb_scene_instance.is_weapon_mode = true
 		weapon_orb_scene_instance.position = body.position
-		weapon_orb_scene_instance.position.x += 30
+		
+		if(projectile_is_flipped_h):
+			weapon_orb_scene_instance.position.x -= 50
+		else:
+			weapon_orb_scene_instance.position.x += 50
+			
 		weapon_orb_scene_instance.position.y -= 20
-		projectile_is_flipped_h = sprite.flip_h
 		projectiles.append(weapon_orb_scene_instance)	
 		add_child(weapon_orb_scene_instance)
 			

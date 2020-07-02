@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/battle_mode.ogg-9abbef841d61fdb881a134fe0e35ce8a.oggstr"
+
+[deps]
+
+source_file="res://audio/voice/kenney_voiceoverfighter/Audio/battle_mode.ogg"
+dest_files=[ "res://.import/battle_mode.ogg-9abbef841d61fdb881a134fe0e35ce8a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

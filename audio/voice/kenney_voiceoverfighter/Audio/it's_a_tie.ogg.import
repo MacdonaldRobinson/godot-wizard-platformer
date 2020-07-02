@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/it's_a_tie.ogg-6c26100fa7155c381d6e464ecdadff54.oggstr"
+
+[deps]
+
+source_file="res://audio/voice/kenney_voiceoverfighter/Audio/it's_a_tie.ogg"
+dest_files=[ "res://.import/it's_a_tie.ogg-6c26100fa7155c381d6e464ecdadff54.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

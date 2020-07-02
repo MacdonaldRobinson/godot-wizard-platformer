@@ -42,4 +42,5 @@ ui_attack2={
 
 [rendering]
 
+quality/2d/use_pixel_snap=true
 environment/default_environment="res://default_env.tres"

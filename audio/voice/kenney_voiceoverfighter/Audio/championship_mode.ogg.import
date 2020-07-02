@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/championship_mode.ogg-f513221b9178a0e453f6ec30d5169c85.oggstr"
+
+[deps]
+
+source_file="res://audio/voice/kenney_voiceoverfighter/Audio/championship_mode.ogg"
+dest_files=[ "res://.import/championship_mode.ogg-f513221b9178a0e453f6ec30d5169c85.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

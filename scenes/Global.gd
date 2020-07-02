@@ -6,11 +6,19 @@ var orbs_collected = 0
 var player_has_died = false setget set_player_has_died
 var player_saybox_text = ""
 
-onready var death_scene = get_tree().get_nodes_in_group("death_scene")[0]
-onready var player = get_tree().get_nodes_in_group("player")[0]
+onready var death_scene
+onready var player
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	var death_scenes = get_tree().get_nodes_in_group("death_scene")
+	var players = get_tree().get_nodes_in_group("death_scene")
+	
+	if(death_scenes.size() > 1):
+		death_scene = death_scenes[0]
+		
+	if(players.size() > 1):
+		player = get_tree().get_nodes_in_group("player")[0]
+	
 	
 func set_player_has_died(new_val):
 	player_has_died = new_val	

@@ -1,0 +1,178 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://scenes/levels/level1/tilemap/Level1TileMap_Red.tscn" type="PackedScene" id=1]
+[ext_resource path="res://backgrounds/parallax backgound pack/_09_distant_clouds1.png" type="Texture" id=2]
+[ext_resource path="res://backgrounds/parallax backgound pack/_01_ground.png" type="Texture" id=3]
+[ext_resource path="res://backgrounds/parallax backgound pack/_11_background.png" type="Texture" id=4]
+[ext_resource path="res://backgrounds/parallax backgound pack/_08_clouds.png" type="Texture" id=5]
+[ext_resource path="res://backgrounds/parallax backgound pack/_06_hill2.png" type="Texture" id=6]
+[ext_resource path="res://backgrounds/parallax backgound pack/_02_trees and bushes.png" type="Texture" id=7]
+[ext_resource path="res://backgrounds/parallax backgound pack/_05_hill1.png" type="Texture" id=8]
+[ext_resource path="res://backgrounds/parallax backgound pack/_07_huge_clouds.png" type="Texture" id=9]
+[ext_resource path="res://backgrounds/parallax backgound pack/_04_bushes.png" type="Texture" id=10]
+[ext_resource path="res://backgrounds/parallax backgound pack/_03_distant_trees.png" type="Texture" id=11]
+[ext_resource path="res://backgrounds/parallax backgound pack/_10_distant_clouds.png" type="Texture" id=12]
+[ext_resource path="res://scenes/players/wizard/Wizard.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/levels/level1/Level1.gd" type="Script" id=14]
+[ext_resource path="res://scenes/overlays/dead_scene/DeadScene.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/enemies/demon/Demon.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/overlays/UI/UI.tscn" type="PackedScene" id=17]
+[ext_resource path="res://scenes/collectables/orb/Orb.tscn" type="PackedScene" id=18]
+[ext_resource path="res://scenes/platforms/red_platform/MovingPlatform.tscn" type="PackedScene" id=19]
+
+
+[sub_resource type="Environment" id=1]
+background_mode = 4
+glow_enabled = true
+glow_blend_mode = 0
+glow_bicubic_upscale = true
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 1127.74, 299.936, 0, 0, 0, 0, 1214.99, -142.379, 0, 0, 0, 0, 1758.99, -370.379, 0, 0, 0, 0, 2454.99, -410.379, 0, 0, 0, 0, 2966.99, -414.379, 0, 0, 0, 0, 3542.99, -238.379, 0, 0, 0, 0, 4070.99, -86.3794, 0, 0, 0, 0, 4426.99, -66.3794, 0, 0, 0, 0, 4658.99, -78.3794, 0, 0, 0, 0, 4926.19, 21.6206, 0, 0, 0, 0, 4986.19, 149.621, 0, 0, 0, 0, 5070.19, 277.621, 0, 0, 0, 0, 4826.19, 863.295, 0, 0, 0, 0, 3538.19, 915.295, 0, 0, 0, 0, 1338.19, 923.295, 0, 0, 0, 0, 254.189, 703.295, 0, 0, 0, 0, 42.9938, 403.295, 0, 0, 0, 0, -37.0062, 171.295, 0, 0, 0, 0, -24.7294, 15.0346, 0, 0, 0, 0, 1127.74, 299.936 )
+}
+
+[node name="Level1" type="Node2D"]
+script = ExtResource( 14 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="BackgroundLayers" type="CanvasLayer" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="BackgroundLayers"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="BackgroundLayers/ParallaxBackground"]
+
+[node name="Background" type="ParallaxLayer" parent="BackgroundLayers/ParallaxBackground"]
+motion_scale = Vector2( 0, 1 )
+motion_mirroring = Vector2( 2048, 0 )
+
+[node name="Sprite" type="Sprite" parent="BackgroundLayers/ParallaxBackground/Background"]
+texture = ExtResource( 4 )
+
+[node name="DistantClouds2" type="ParallaxLayer" parent="BackgroundLayers/ParallaxBackground"]
+motion_scale = Vector2( 0.1, 1 )
+motion_mirroring = Vector2( 2048, 0 )
+
+[node name="Sprite" type="Sprite" parent="BackgroundLayers/ParallaxBackground/DistantClouds2"]
+texture = ExtResource( 12 )
+
+[node name="DistantClouds1" type="ParallaxLayer" parent="BackgroundLayers/ParallaxBackground"]
+motion_scale = Vector2( 0.2, 1 )
+motion_mirroring = Vector2( 2048, 0 )
+
+[node name="Sprite" type="Sprite" parent="BackgroundLayers/ParallaxBackground/DistantClouds1"]
+texture = ExtResource( 2 )
+
+[node name="Clouds" type="ParallaxLayer" parent="BackgroundLayers/ParallaxBackground"]
+motion_scale = Vector2( 0.3, 1 )
+motion_mirroring = Vector2( 2048, 0 )
+
+[node name="Sprite" type="Sprite" parent="BackgroundLayers/ParallaxBackground/Clouds"]
+texture = ExtResource( 5 )
+
+[node name="HugeClouds" type="ParallaxLayer" parent="BackgroundLayers/ParallaxBackground"]
+motion_scale = Vector2( 0.4, 1 )
+motion_mirroring = Vector2( 2048, 0 )
+
+[node name="Sprite" type="Sprite" parent="BackgroundLayers/ParallaxBackground/HugeClouds"]
+texture = ExtResource( 9 )
+
+[node name="Hills2" type="ParallaxLayer" parent="BackgroundLayers/ParallaxBackground"]
+motion_scale = Vector2( 0.5, 1 )
+motion_mirroring = Vector2( 2048, 0 )
+
+[node name="Sprite" type="Sprite" parent="BackgroundLayers/ParallaxBackground/Hills2"]
+texture = ExtResource( 6 )
+
+[node name="Hills1" type="ParallaxLayer" parent="BackgroundLayers/ParallaxBackground"]
+motion_scale = Vector2( 0.6, 1 )
+motion_mirroring = Vector2( 2048, 0 )
+
+[node name="Sprite" type="Sprite" parent="BackgroundLayers/ParallaxBackground/Hills1"]
+texture = ExtResource( 8 )
+
+[node name="Bushes" type="ParallaxLayer" parent="BackgroundLayers/ParallaxBackground"]
+motion_scale = Vector2( 0.7, 1 )
+motion_mirroring = Vector2( 2048, 0 )
+
+[node name="Sprite" type="Sprite" parent="BackgroundLayers/ParallaxBackground/Bushes"]
+texture = ExtResource( 10 )
+
+[node name="TreesAndBushesFar" type="ParallaxLayer" parent="BackgroundLayers/ParallaxBackground"]
+motion_scale = Vector2( 0.8, 1 )
+motion_mirroring = Vector2( 2048, 0 )
+
+[node name="Sprite" type="Sprite" parent="BackgroundLayers/ParallaxBackground/TreesAndBushesFar"]
+texture = ExtResource( 11 )
+
+[node name="TreesAndBushes" type="ParallaxLayer" parent="BackgroundLayers/ParallaxBackground"]
+motion_scale = Vector2( 0.9, 1 )
+motion_mirroring = Vector2( 2048, 0 )
+
+[node name="Sprite" type="Sprite" parent="BackgroundLayers/ParallaxBackground/TreesAndBushes"]
+texture = ExtResource( 7 )
+
+[node name="Ground" type="ParallaxLayer" parent="BackgroundLayers/ParallaxBackground"]
+motion_mirroring = Vector2( 2048, 0 )
+
+[node name="Sprite" type="Sprite" parent="BackgroundLayers/ParallaxBackground/Ground"]
+texture = ExtResource( 3 )
+
+[node name="Players" type="Node2D" parent="."]
+position = Vector2( -1766, -150 )
+
+[node name="Wizard" parent="Players" instance=ExtResource( 13 )]
+position = Vector2( 1438.77, 483.294 )
+
+[node name="TileMaps" type="Node2D" parent="."]
+
+[node name="TileMap" parent="TileMaps" instance=ExtResource( 1 )]
+tile_data = PoolIntArray( 393228, 0, 65539, 393229, 0, 131078, 393230, 0, 131078, 393231, 0, 131078, 393232, 0, 131078, 393233, 0, 131078, 393234, 0, 131078, 393235, 0, 131078, 393236, 0, 131078, 393237, 0, 131078, 393238, 0, 65538, 458763, 0, 65539, 458764, 0, 131075, 458765, 0, 0, 458766, 0, 0, 458767, 0, 0, 458768, 0, 0, 458769, 0, 0, 458770, 0, 0, 458771, 0, 0, 458772, 0, 0, 458773, 0, 0, 458774, 0, 131076, 458775, 0, 65538, 524298, 0, 65539, 524299, 0, 131075, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 524303, 0, 0, 524304, 0, 0, 524305, 0, 0, 524306, 0, 0, 524307, 0, 0, 524308, 0, 0, 524309, 0, 0, 524310, 0, 0, 524311, 0, 131076, 524312, 0, 65538, 589833, 0, 65539, 589834, 0, 131075, 589835, 0, 0, 589836, 0, 0, 589837, 0, 0, 589838, 0, 0, 589839, 0, 0, 589840, 0, 0, 589841, 0, 0, 589842, 0, 0, 589843, 0, 0, 589844, 0, 0, 589845, 0, 0, 589846, 0, 0, 589847, 0, 0, 589848, 0, 131076, 589849, 0, 65538, 655360, 0, 2, 655361, 0, 2, 655362, 0, 2, 655363, 0, 2, 655364, 0, 2, 655365, 0, 131077, 655366, 0, 131077, 655367, 0, 131077, 655368, 0, 131077, 655369, 0, 131075, 655370, 0, 131072, 655371, 0, 0, 655372, 0, 0, 655373, 0, 0, 655374, 0, 0, 655375, 0, 0, 655376, 0, 0, 655377, 0, 0, 655378, 0, 0, 655379, 0, 0, 655380, 0, 0, 655381, 0, 0, 655382, 0, 0, 655383, 0, 0, 655384, 0, 131072, 655385, 0, 131076, 655386, 0, 65538, 720896, 0, 0, 720897, 0, 0, 720898, 0, 0, 720899, 0, 0, 720900, 0, 0, 720901, 0, 0, 720902, 0, 0, 720903, 0, 0, 720904, 0, 0, 720905, 0, 0, 720906, 0, 0, 720907, 0, 0, 720908, 0, 0, 720909, 0, 0, 720910, 0, 0, 720911, 0, 0, 720912, 0, 0, 720913, 0, 0, 720914, 0, 0, 720915, 0, 0, 720916, 0, 0, 720917, 0, 0, 720918, 0, 0, 720919, 0, 0, 720920, 0, 0, 720921, 0, 0, 720922, 0, 131076, 720923, 0, 65538, 786432, 0, 0, 786433, 0, 0, 786434, 0, 0, 786435, 0, 0, 786436, 0, 0, 786437, 0, 0, 786438, 0, 0, 786439, 0, 0, 786440, 0, 0, 786441, 0, 0, 786442, 0, 0, 786443, 0, 0, 786444, 0, 0, 786445, 0, 0, 786446, 0, 0, 786447, 0, 0, 786448, 0, 0, 786449, 0, 0, 786450, 0, 0, 786451, 0, 0, 786452, 0, 0, 786453, 0, 0, 786454, 0, 0, 786455, 0, 0, 786456, 0, 0, 786457, 0, 0, 786458, 0, 0, 786459, 0, 131074, 786460, 0, 2, 786461, 0, 2, 786462, 0, 2, 786463, 0, 2, 786464, 0, 2, 786465, 0, 2, 786466, 0, 2, 786467, 0, 2, 786468, 0, 2, 786469, 0, 2, 786470, 0, 2, 786471, 0, 2, 786472, 0, 2, 786473, 0, 2 )
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Demon" parent="Enemies" instance=ExtResource( 16 )]
+position = Vector2( 1026.03, 96.1957 )
+
+[node name="Demon2" parent="Enemies" instance=ExtResource( 16 )]
+position = Vector2( 1924.94, 476.496 )
+
+[node name="Collectables" type="Node2D" parent="."]
+
+[node name="Orb" parent="Collectables" instance=ExtResource( 18 )]
+position = Vector2( 2159.9, 331.225 )
+
+[node name="Orb2" parent="Collectables" instance=ExtResource( 18 )]
+position = Vector2( 2751.23, 140.343 )
+
+[node name="Orb3" parent="Collectables" instance=ExtResource( 18 )]
+position = Vector2( 3342.57, -10.4937 )
+
+[node name="Orb4" parent="Collectables" instance=ExtResource( 18 )]
+position = Vector2( 3686.96, 110.977 )
+
+[node name="Orb5" parent="Collectables" instance=ExtResource( 18 )]
+position = Vector2( 3811.1, 363.261 )
+
+[node name="Overlays" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="Overlays" instance=ExtResource( 17 )]
+
+[node name="DeathScene" parent="Overlays" groups=[
+"overlay",
+] instance=ExtResource( 15 )]
+visible = false
+
+[node name="Platforms" type="Node2D" parent="."]
+position = Vector2( -1388.99, 142.705 )
+
+[node name="Path2D" type="Path2D" parent="Platforms"]
+curve = SubResource( 2 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Platforms/Path2D"]
+position = Vector2( 1127.74, 299.936 )
+rotate = false
+
+[node name="MovingPlatform" parent="Platforms/Path2D/PathFollow2D" instance=ExtResource( 19 )]

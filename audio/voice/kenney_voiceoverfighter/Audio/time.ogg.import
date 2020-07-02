@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/time.ogg-2d3ce56a2abd2de46e857c4f49589a02.oggstr"
+
+[deps]
+
+source_file="res://audio/voice/kenney_voiceoverfighter/Audio/time.ogg"
+dest_files=[ "res://.import/time.ogg-2d3ce56a2abd2de46e857c4f49589a02.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/arcade_mode.ogg-c83a54963d8f2e345e2e4a6db7246fb1.oggstr"
+
+[deps]
+
+source_file="res://audio/voice/kenney_voiceoverfighter/Audio/arcade_mode.ogg"
+dest_files=[ "res://.import/arcade_mode.ogg-c83a54963d8f2e345e2e4a6db7246fb1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/sudden_death.ogg-45336479e05357d1d32ec582771774de.oggstr"
+
+[deps]
+
+source_file="res://audio/voice/kenney_voiceoverfighter/Audio/sudden_death.ogg"
+dest_files=[ "res://.import/sudden_death.ogg-45336479e05357d1d32ec582771774de.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

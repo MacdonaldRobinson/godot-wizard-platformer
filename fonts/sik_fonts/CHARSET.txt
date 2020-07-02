@@ -1,0 +1,57 @@
+Cyberoise:
+   - U+0000..U+00FF ASCII and Latin-1
+   - U+0100..U+017F Latin Extended A
+   - U+0400..U+045F Cyrillic (lower part)
+
+Decolue:
+   - U+0000..U+00FF ASCII and Latin-1
+   - U+0100..U+017F Latin Extended A
+   - U+0370..U+03FF Greek
+   - U+0400..U+045F Cyrillic (lower part)
+
+Diamonaire:
+   - U+0000..U+00FF ASCII and Latin-1
+   - U+0100..U+017F Latin Extended A
+
+Funstella:
+   - U+0000..U+00FF ASCII and Latin-1
+   - U+3040..U+30FF Hiragana and katakana
+   - U+FF00..U+FF9F Fullwidth and halfwidth (without hangul)
+   - Some Japanese symbols: 。、「」『』【】 (and U+3000)
+   - Extra characters: ↑↓←→
+   (to-do: check if anything is missing)
+
+Normaleste:
+   - U+0000..U+00FF ASCII and Latin-1
+   - U+0100..U+017F Latin Extended A
+   - U+0370..U+03FF Greek
+   - U+0400..U+045F Cyrillic (lower part)
+   - U+2000..U+206F General punctuation
+
+Pinlight:
+   - U+0000..U+00FF ASCII and Latin-1
+   - U+0100..U+017F Latin Extended A
+
+Pixeletter:
+   - U+0000..U+00FF ASCII and Latin-1
+   - U+0100..U+017F Latin Extended A
+   - U+0370..U+03FF Greek
+   - U+0400..U+045F Cyrillic (lower part)
+
+Roman Teal:
+   - U+0000..U+00FF ASCII and Latin-1
+   - U+0100..U+017F Latin Extended A
+   - U+0370..U+03FF Greek
+   - U+0400..U+045F Cyrillic (lower part)
+
+Video Glau:
+   - U+0000..U+00FF ASCII and Latin-1
+   - U+0100..U+017F Latin Extended A
+   - U+0370..U+03FF Greek
+   - U+0400..U+045F Cyrillic (lower part)
+   - U+2000..U+206F General punctuation
+   - U+2190..U+21FF Arrows
+   - U+2500..U+257F Box drawing
+   - U+2580..U+259F Solid blocks
+   - U+2D30..U+2D7F Tifinagh
+   - Some UI elements (see ICONS.txt)

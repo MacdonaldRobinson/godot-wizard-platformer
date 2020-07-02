@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/round_4.ogg-102c8402afdf9cd18473b6102eb21bfd.oggstr"
+
+[deps]
+
+source_file="res://audio/voice/kenney_voiceoverfighter/Audio/round_4.ogg"
+dest_files=[ "res://.import/round_4.ogg-102c8402afdf9cd18473b6102eb21bfd.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

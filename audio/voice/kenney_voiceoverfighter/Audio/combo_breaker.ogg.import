@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/combo_breaker.ogg-e0d9b8a53d0e7727a04ff0decba21252.oggstr"
+
+[deps]
+
+source_file="res://audio/voice/kenney_voiceoverfighter/Audio/combo_breaker.ogg"
+dest_files=[ "res://.import/combo_breaker.ogg-e0d9b8a53d0e7727a04ff0decba21252.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
