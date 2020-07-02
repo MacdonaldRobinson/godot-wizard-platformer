@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/platforms/Platform.gd" type="Script" id=1]
 [ext_resource path="res://scenes/levels/level1/Level1Tileset.tres" type="TileSet" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 128.939, 26.8189 )
+extents = Vector2( 128.939, 26.1703 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 126.852, 27.0056 )
 
 [node name="Platform" type="Node2D" groups=[
 "platform",
@@ -21,3 +24,11 @@ tile_data = PoolIntArray( -2, 0, 5, -1, 0, 6, -65536, 0, 6, -65535, 0, 7 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
 position = Vector2( 0.271828, -37.2097 )
 shape = SubResource( 1 )
+
+[node name="HitArea" type="Area2D" parent="."]
+position = Vector2( 1.00113, 2.00226 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+position = Vector2( 0, -39.3778 )
+shape = SubResource( 2 )
+[connection signal="body_entered" from="HitArea" to="." method="_on_HitArea_body_entered"]

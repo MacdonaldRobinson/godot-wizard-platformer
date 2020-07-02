@@ -46,9 +46,6 @@ func _unhandled_input(event):
 	if(event is InputEventAction):		
 		if(event.action == "ui_attack1"):			
 			run_attack = true		
-	
-	if(Input.is_action_just_pressed("ui_attack1") || run_attack):
-		print("Event ran")
 		
 	if((Input.is_action_just_pressed("ui_attack1") || run_attack) && !is_attacking):
 		
@@ -62,9 +59,6 @@ var saybox_container_flip_h = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):	
 	
-	for node in hit_area.get_overlapping_areas():
-		print(node)
-		
 	var snap = Vector2(0, 32)
 	
 	health_bar.value = Global.player_health
@@ -92,8 +86,7 @@ func _physics_process(delta):
 		if(projectile == null):			
 			projectiles.erase(projectile)
 
-		if(projectile != null):	
-			print(projectile_is_flipped_h)
+		if(projectile != null):				
 			if(projectile_is_flipped_h):
 				projectile.position.x -= 30	
 			else:

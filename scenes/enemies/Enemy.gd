@@ -107,7 +107,7 @@ func _on_AttackArea_area_shape_entered(area_id, area, area_shape, self_shape):
 	var owner = area.get_owner();	
 	if(owner != null && owner.is_in_group("weapon") && owner.is_weapon_mode):
 		current_animation = "Hurt"
-		health_bar.value = 0
+		health_bar.value -=100
 		
 func _on_AnimatedSprite_animation_finished():
 	if(sprite.animation == "Hurt"):
