@@ -17,7 +17,7 @@ func player_entered_path_platform(player_body, platform_body):
 	print("player_entered_path_platform")
 	print(path_follow_platform.offset)
 	var current_offset = path_follow_platform.get_offset()
-	path_follow_platform.set_offset( current_offset + 1)
+	path_follow_platform.set_offset( current_offset + 10)
 	
 
 func _on_Wizard_orb_collected():

@@ -13,6 +13,7 @@ func _ready():
 	pass
 	
 func _physics_process(delta):	
+	
 	if(is_entered_body_owner_run_function_run_in_process):
 		_on_HitArea_body_entered(_entered_body);
 	else:
