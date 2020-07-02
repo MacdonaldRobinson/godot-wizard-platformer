@@ -18,7 +18,7 @@
 [ext_resource path="res://scenes/enemies/demon/Demon.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/overlays/UI/UI.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/collectables/orb/Orb.tscn" type="PackedScene" id=18]
-[ext_resource path="res://scenes/platforms/Platform.tscn" type="PackedScene" id=19]
+[ext_resource path="res://scenes/platforms/path-platform/PathPlatform.tscn" type="PackedScene" id=19]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -28,7 +28,7 @@ glow_bicubic_upscale = true
 
 [sub_resource type="Curve2D" id=2]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 4221.95, 361.725, -309.363, -42.3785, 309.363, 42.3785, 4702.59, -100.358, 0, 0, 0, 0, 5039.45, 1.41158, -52.9732, -235.201, 52.9732, 235.201, 5141.21, 300.119, 148.325, -171.633, -148.325, 171.633, 4850.87, 912.55, 42.3785, 296.65, -42.3785, -296.65, 4259.69, 1056.64, 0, 0, 0, 0, 4221.95, 361.725 )
+"points": PoolVector2Array( 0, 0, 0, 0, 78.604, 1.88904, 0, 0, 0, 0, 430.706, -450.6, 0, 0, 0, 0, 691.412, -357.705, 0, 0, 0, 0, 868.212, -113.481 )
 }
 
 [node name="Level1" type="Node2D"]
@@ -164,11 +164,13 @@ visible = false
 [node name="Platforms" type="Node2D" parent="."]
 position = Vector2( -1388.99, 142.705 )
 
-[node name="Path2D" type="Path2D" parent="Platforms"]
+[node name="PathPlatform" parent="Platforms" instance=ExtResource( 19 )]
+position = Vector2( 4290.72, 367.696 )
+
+[node name="Path2D2" type="Path2D" parent="Platforms/PathPlatform"]
 curve = SubResource( 2 )
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Platforms/Path2D"]
-position = Vector2( 4238.61, 347.444 )
+[node name="PathFollow2D" type="PathFollow2D" parent="Platforms/PathPlatform/Path2D2"]
+position = Vector2( 78.604, 1.88904 )
 rotate = false
-
-[node name="PathPlatform" parent="Platforms/Path2D/PathFollow2D" instance=ExtResource( 19 )]
+loop = false
