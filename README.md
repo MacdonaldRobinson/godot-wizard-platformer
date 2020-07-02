@@ -6,4 +6,4 @@ You can checkout the game here: https://macdonaldrobinson.github.io/godot-wizard
 Instructions:
 - Arrow for movement
   - Up arrow for Jump
-- Number 2 to shoot
+- Number 1 to shoot
