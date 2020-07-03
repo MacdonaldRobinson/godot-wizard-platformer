@@ -18,7 +18,7 @@ func player_entered(body, platform_body):
 func player_exited(body, platform_body):
 	print("player exited platform")
 
-func _on_HitArea_body_entered(body):
+func _on_HitArea_body_entered(body):	
 	if body != null:
 		_entered_body = body
 		var owner = body.get_owner()

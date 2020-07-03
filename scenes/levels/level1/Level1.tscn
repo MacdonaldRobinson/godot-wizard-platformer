@@ -28,7 +28,7 @@ glow_bicubic_upscale = true
 
 [sub_resource type="Curve2D" id=2]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 78.604, 1.88904, 0, 0, 0, 0, 430.706, -450.6, 0, 0, 0, 0, 691.412, -357.705, 0, 0, 0, 0, 868.212, -113.481 )
+"points": PoolVector2Array( 0, 0, 0, 0, -4.43677, -3.41986, 0, 0, 0, 0, 399.542, -624.489, 0, 0, 0, 0, -81.834, -973.723 )
 }
 
 [node name="Level1" type="Node2D"]
@@ -123,7 +123,7 @@ texture = ExtResource( 3 )
 position = Vector2( 581.649, 1.37781 )
 
 [node name="Wizard" parent="Players" instance=ExtResource( 13 )]
-position = Vector2( 1831.87, 480.774 )
+position = Vector2( 1701.03, 470.899 )
 
 [node name="TileMaps" type="Node2D" parent="."]
 
@@ -165,12 +165,17 @@ visible = false
 position = Vector2( -1388.99, 142.705 )
 
 [node name="PathPlatform" parent="Platforms" instance=ExtResource( 19 )]
-position = Vector2( 4290.72, 367.696 )
+position = Vector2( 4315.39, 517.243 )
+one_way = false
 
-[node name="Path2D2" type="Path2D" parent="Platforms/PathPlatform"]
+[node name="PathPlatform2" parent="Platforms" instance=ExtResource( 19 )]
+position = Vector2( 4795.83, 883.519 )
+one_way = false
+
+[node name="Path2D2" type="Path2D" parent="Platforms/PathPlatform2"]
 curve = SubResource( 2 )
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Platforms/PathPlatform/Path2D2"]
-position = Vector2( 78.604, 1.88904 )
+[node name="PathFollow2D" type="PathFollow2D" parent="Platforms/PathPlatform2/Path2D2"]
+position = Vector2( -4.43677, -3.41986 )
+rotation = -0.994101
 rotate = false
-loop = false
