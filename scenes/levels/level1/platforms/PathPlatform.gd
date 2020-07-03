@@ -1,76 +1,110 @@
 extends Node2D
+class_name PathPlatform
 
-onready var path_follow:PathFollow2D = $Path2D/PathFollow2D
-onready var path2d = $Path2D
-onready var platform = $Path2D/PathFollow2D/Platform
-onready var pause_timer:Timer = $PauseTimer
+var path:Path2D 
+var path_follow:PathFollow2D
+var platform:Platform
+var pause_timer:Timer = Timer.new()
 
+export var group_name = "player"
 export var pause_time = 1
 export var platform_move_speed = 5
 export var one_way = true
 export var only_move_when_group_enters = true
+export var reset_platform_when_group_exits = true
 
 func _ready():	
-	for child in get_children():
-		var test_path_follow = child.get_child(0)
-		if(child is Path2D && child != path2d && test_path_follow is PathFollow2D):	
-			path_follow.remove_child(platform)		
-			(test_path_follow as PathFollow2D).add_child(platform)
-			test_path_follow.rotation_degrees = 0
-			test_path_follow.loop = false
-			path_follow = test_path_follow
-			
+	for path_test in get_children():	
+		if(path_test is Timer):			
+			pause_timer = path_test	
+		elif(path_test is Path2D):			
+			path = path_test			
+			for pathfollow_test in path.get_children():	
+				if(pathfollow_test is PathFollow2D):							
+					pathfollow_test.rotation_degrees = 0
+					pathfollow_test.loop = false
+					path_follow = pathfollow_test
+					for platform_test in path_follow.get_children():	
+						if(platform_test is Platform):
+							platform = platform_test
+							
 	pause_timer.wait_time = pause_time
-	
-	platform.is_entered_body_owner_group = "player"
-	platform.is_entered_body_owner_run_function = funcref(self, "player_entered_path_platform")
-	platform.is_exited_body_owner_run_function = funcref(self, "player_exited_path_platform")	
+	pause_timer.connect("timeout", self, "_on_PauseTimer_timeout")
+	add_child(pause_timer)
 
-var direction_flipped = false
-var is_player_on_platform = false
-var player_body 
+	if(platform is Platform):		
+		platform.owner_group_name = group_name
+		platform.body_entered_run_function = funcref(self, "group_entered_path_platform")
+		platform.body_exited_run_function = funcref(self, "group_exited_path_platform")	
+
+var is_group_on_platform = false
+
+var group_body 
 var platform_body
 
-func _physics_process(delta):
-	if(is_player_on_platform || !only_move_when_group_enters):
-		player_entered_path_platform_process()
+enum DIRECTION {
+	FORWARD,
+	BACKWARD
+}
 
+var move_direction = DIRECTION.FORWARD
+var can_move = true
+var is_resetting = false
 
-func player_entered_path_platform(player_body, platform_body):	
-	print("player_entered_path_platform")
-	player_body = player_body
+func _get_is_end_of_path():
+	return path_follow.get_unit_offset() == 1
+	
+func _get_is_start_of_path():
+	return path_follow.get_unit_offset() == 0	
+
+func _physics_process(delta):	
+	group_entered_path_platform_process()		
+
+func group_entered_path_platform(player_body, platform_body):		
+	print("group_entered_path_platform")
+	print(player_body.name)
+	player_body = group_body
 	platform_body = platform_body
-	is_player_on_platform = true	
+	is_group_on_platform = true	
 			
-func player_entered_path_platform_process():
-	print("player_entered_path_platform_process")
-	var current_offset = path_follow.get_offset()	
-	if(!direction_flipped && path_follow.get_unit_offset() == 1):
-		if(!one_way):
-			direction_flipped = true
-			pause_timer.start()
-		set_physics_process(false)
-		print("flipped true")
-	elif(direction_flipped && path_follow.get_unit_offset() == 0):
-		if(!one_way):
-			direction_flipped = false
-			pause_timer.start()
-		print("flipped false")
-		set_physics_process(false)
-		
-	if(!direction_flipped):
-		print(path_follow.get_offset())
-		path_follow.set_offset(current_offset + platform_move_speed)
-	else:
-		print(path_follow.get_offset())
-		path_follow.set_offset(current_offset - platform_move_speed)	
-		
+func group_entered_path_platform_process():		
 
-func player_exited_path_platform(player_body, platform_body):
-	print("player_exited_path_platform")
-	is_player_on_platform = false
+		if !is_resetting:		
+			if(!is_group_on_platform && only_move_when_group_enters):
+				can_move = false			
+			else:				
+				if(_get_is_end_of_path() && one_way):
+					can_move = false
+				else:
+					can_move = true
+		else:
+			can_move = true
+		
+		print(is_resetting)	
+		print(can_move)
+		var current_offset = path_follow.get_offset()	
+				
+		if can_move:
+			if(move_direction == DIRECTION.FORWARD):		
+				path_follow.set_offset(current_offset + platform_move_speed)
+			if(move_direction == DIRECTION.BACKWARD):
+				path_follow.set_offset(current_offset - platform_move_speed)	
+					
+		if(_get_is_start_of_path()):
+			move_direction = DIRECTION.FORWARD
+			is_resetting = false
+		elif(_get_is_end_of_path()):
+			move_direction = DIRECTION.BACKWARD		
+			is_resetting = false	
+		else:
+			if(reset_platform_when_group_exits && !is_group_on_platform && only_move_when_group_enters):
+				move_direction = DIRECTION.BACKWARD
+				is_resetting = true
+
+func group_exited_path_platform(player_body, platform_body):
+	print("group_exited_path_platform")
+	is_group_on_platform = false	
 
 
 func _on_PauseTimer_timeout():
 	print("Ran pause timer")
-	set_physics_process(true)

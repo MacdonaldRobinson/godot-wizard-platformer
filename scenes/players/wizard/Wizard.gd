@@ -41,14 +41,16 @@ func _ready():
 	saybox_original_position = saybox_container.rect_position;
 	saybox_container.hide()
 
-func _unhandled_input(event):
+var unhandled_event_action = ""
+
+func _unhandled_input(event):	
 	var run_attack = false		
 	if(event is InputEventAction):		
+		unhandled_event_action = event.action
 		if(event.action == "ui_attack1"):			
-			run_attack = true		
+			run_attack = true
 		
-	if((Input.is_action_just_pressed("ui_attack1") || run_attack) && !is_attacking):
-		
+	if((Input.is_action_just_pressed("ui_attack1") || run_attack) && !is_attacking):		
 		sprite.play("Attack1")
 		is_attacking = true
 	elif((Input.is_action_just_pressed("ui_attack2") || run_attack) && !is_attacking):
@@ -58,7 +60,6 @@ func _unhandled_input(event):
 var saybox_container_flip_h = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):	
-	
 	var snap = Vector2(0, 32)
 	
 	health_bar.value = Global.player_health
@@ -102,27 +103,31 @@ func _physics_process(delta):
 	if (!body.is_on_floor()):
 		run_animation = "Jump"	
 	if Global.player_has_died:
-		run_animation = "Death"		
-	
-	if(Input.is_action_pressed("ui_left") && !is_attacking):		
+		run_animation = "Death"	
+				
+	if((Input.is_action_pressed("ui_left") || unhandled_event_action =="ui_left") && !is_attacking):		
 		new_position.x -= SPEED
 		sprite.flip_h = true
 		sprite.play(run_animation)
-	elif(Input.is_action_pressed("ui_right") && !is_attacking):
+		unhandled_event_action = ""
+	elif((Input.is_action_pressed("ui_right") || unhandled_event_action =="ui_right") && !is_attacking):
 		new_position.x += SPEED
 		sprite.flip_h = false
 		sprite.play(run_animation)		
+		unhandled_event_action = ""
 	else:
 		if(body.is_on_floor() && !is_attacking):
-			sprite.play("Idle")			
+			sprite.play("Idle")
 		
-	if(Input.is_action_pressed("ui_up") && body.is_on_floor()):
+	if((Input.is_action_pressed("ui_up") || unhandled_event_action =="ui_up") && body.is_on_floor()):		
 		new_position.y -= SPEED	* 5
 		sprite.play("Jump")
 		snap.y = 0
-	elif(Input.is_action_pressed("ui_down") && !body.is_on_floor()):
+		unhandled_event_action = ""
+	elif((Input.is_action_pressed("ui_down") || unhandled_event_action =="ui_down") && !body.is_on_floor()):
 		new_position.y += SPEED
 		sprite.play("Fall")		
+		unhandled_event_action = ""
 	
 	
 	if(!body.is_on_floor() && !is_attacking ):		

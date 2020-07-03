@@ -39,7 +39,7 @@ func raise_event(event_name:String):
 	var event = InputEventAction.new()
 	event.action = event_name
 	event.pressed = false
-	Input.parse_input_event(event)		
+	Input.parse_input_event(event)
 
 func restart():
 	player_health = 100
