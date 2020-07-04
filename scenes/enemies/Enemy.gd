@@ -28,7 +28,7 @@ var new_position = Vector2(0, 0)
 var direction = DIRECTION.RIGHT
 
 var is_dead = false
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+var attack_group_name = "player"
 
 func set_alert():
 	print("set alert")
@@ -54,7 +54,7 @@ func _physics_process(delta):
 			new_position.x += current_speed
 		
 	if(ray.is_colliding()):
-		if(ray.get_collider().get_owner().is_in_group("player")):	
+		if(ray.get_collider().get_owner().is_in_group(attack_group_name)):	
 			stop_alert_timer.start(0)
 			current_speed = FOLLOW_SPEED
 		elif(ray.get_collider().get_owner().is_in_group("enemy")):
@@ -90,24 +90,18 @@ func flip_direction():
 
 func _on_FlipDirection_timeout():
 	flip_direction()
+	
+func _on_AttackArea_area_entered(area):
+	var owner = area.get_owner()
+	if(owner != null):
+		if(owner.is_in_group(attack_group_name)):
+			current_animation = "Attack"
+			set_alert()
+		print(owner)
+		if(owner.get("is_weapon_mode") == true):
+			current_animation = "Hurt"
+			health_bar.value -=100
 
-func _on_AttackArea_body_entered(entered_body):		
-	var owner = entered_body.get_owner()
-	if(owner != null && owner.is_in_group("player")):
-		current_animation = "Attack"
-		set_alert()
-
-func _on_AttackArea_body_exited(exited_body):	
-	var owner = exited_body.get_owner()
-	if(owner!= null && owner.is_in_group("player")):
-		flip_direction()
-		set_alert()
-
-func _on_AttackArea_area_shape_entered(area_id, area, area_shape, self_shape):
-	var owner = area.get_owner();	
-	if(owner != null && owner.is_in_group("weapon") && owner.is_weapon_mode):
-		current_animation = "Hurt"
-		health_bar.value -=100
 		
 func _on_AnimatedSprite_animation_finished():
 	if(sprite.animation == "Hurt"):
@@ -128,3 +122,11 @@ func _on_StopAlertTimer_timeout():
 	current_speed = WALK_SPEED
 	current_animation = "Walk"
 	print("No longer Alert")
+
+
+func _on_AttackArea_area_exited(area):
+	var owner = area.get_owner()
+	if owner!= null:
+		if(owner.is_in_group(attack_group_name)):
+			flip_direction()
+			set_alert()

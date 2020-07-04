@@ -174,10 +174,12 @@ func _on_HitArea_area_entered(area):
 	if(owner.is_in_group("enemy") && !owner.is_dead):
 		print("enemy entered")
 		taking_damage = true
-	elif(owner.is_in_group("orb") && !owner.is_weapon_mode):
-			Global.orbs_collected += 1	
-		
-
+	
+	if(owner.is_in_group("orb") && !owner.is_weapon_mode):
+			Global.orbs_collected += 100
+	
+	if(owner.is_in_group("health") && !owner.is_weapon_mode):
+			Global.player_health += 100
 
 func _on_HitArea_area_exited(area):
 	var owner = area.get_owner()

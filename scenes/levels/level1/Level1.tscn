@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://scenes/levels/level1/tilemap/Level1TileMap_Red.tscn" type="PackedScene" id=1]
 [ext_resource path="res://backgrounds/parallax backgound pack/_09_distant_clouds1.png" type="Texture" id=2]
@@ -18,9 +18,8 @@
 [ext_resource path="res://scenes/enemies/demon/Demon.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/overlays/UI/UI.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/collectables/orb/Orb.tscn" type="PackedScene" id=18]
-[ext_resource path="res://scenes/reusable-scripts/platform/PathPlatform.gd" type="Script" id=19]
-[ext_resource path="res://scenes/levels/level1/platforms/Platform.tscn" type="PackedScene" id=20]
-[ext_resource path="res://icon.png" type="Texture" id=22]
+[ext_resource path="res://textures/ui/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_12.png" type="Texture" id=19]
+[ext_resource path="res://scenes/levels/level1/platforms/PathPlatform.tscn" type="PackedScene" id=21]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -28,21 +27,15 @@ glow_enabled = true
 glow_blend_mode = 0
 glow_bicubic_upscale = true
 
-[sub_resource type="Curve2D" id=2]
+[sub_resource type="Curve2D" id=6]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, -5.30444, -10.8905, 0, 0, 0, 0, -4.95386, 717.546 )
+"points": PoolVector2Array( 0, 0, 0, 0, -10.3352, -17.4247, 0, 0, 0, 0, -17.4707, -871.275, 0, 0, 0, 0, -2086.69, -876.032 )
 }
 
-[sub_resource type="Curve2D" id=3]
+[sub_resource type="Curve2D" id=7]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, -0.278076, -1.88586, 0, 0, 0, 0, -51.1868, -471.054, 0, 0, 0, 0, -1181.19, -469.054 )
+"points": PoolVector2Array( 0, 0, 0, 0, -19.2058, -22.5719, 0, 0, 0, 0, -31.9338, 690.192 )
 }
-
-[sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 29.0515, 24.9413 )
-
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 30.0856, 33.7766 )
 
 [node name="Level1" type="Node2D"]
 script = ExtResource( 14 )
@@ -150,20 +143,18 @@ position = Vector2( 80.5981, 361.396 )
 
 [node name="Collectables" type="Node2D" parent="."]
 
-[node name="Orb" parent="Collectables" instance=ExtResource( 18 )]
-position = Vector2( 2159.9, 331.225 )
+[node name="Orb" parent="Collectables" groups=[
+"orb",
+] instance=ExtResource( 18 )]
+position = Vector2( 1882.42, 378.18 )
 
-[node name="Orb2" parent="Collectables" instance=ExtResource( 18 )]
-position = Vector2( 2751.23, 140.343 )
+[node name="Health" parent="Collectables" groups=[
+"health",
+] instance=ExtResource( 18 )]
+position = Vector2( 2003.12, 375.207 )
 
-[node name="Orb3" parent="Collectables" instance=ExtResource( 18 )]
-position = Vector2( 768.478, 822.565 )
-
-[node name="Orb4" parent="Collectables" instance=ExtResource( 18 )]
-position = Vector2( 1259.7, 836.158 )
-
-[node name="Orb5" parent="Collectables" instance=ExtResource( 18 )]
-position = Vector2( 1776.4, 821.743 )
+[node name="Sprite" parent="Collectables/Health" index="0"]
+texture = ExtResource( 19 )
 
 [node name="Overlays" type="CanvasLayer" parent="."]
 
@@ -177,54 +168,26 @@ visible = false
 [node name="Platforms" type="Node2D" parent="."]
 position = Vector2( -1388.99, 142.705 )
 
-[node name="PathPlatform3" type="Node2D" parent="Platforms"]
-position = Vector2( 145.664, 62.2254 )
-script = ExtResource( 19 )
-one_way = false
+[node name="PathPlatform2" parent="Platforms" instance=ExtResource( 21 )]
+position = Vector2( 4795.16, 282.86 )
 
-[node name="Path2D2" type="Path2D" parent="Platforms/PathPlatform3"]
-position = Vector2( 4129.43, 396.166 )
-curve = SubResource( 2 )
+[node name="Path2D2" parent="Platforms/PathPlatform2" index="0"]
+curve = SubResource( 6 )
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Platforms/PathPlatform3/Path2D2"]
-position = Vector2( -5.30444, -10.8905 )
-rotate = false
-loop = false
+[node name="PathFollow2D" parent="Platforms/PathPlatform2/Path2D2" index="0"]
+position = Vector2( -10.3352, -17.4247 )
 
-[node name="Platform" parent="Platforms/PathPlatform3/Path2D2/PathFollow2D" instance=ExtResource( 20 )]
+[node name="PathPlatform3" parent="Platforms" instance=ExtResource( 21 )]
+position = Vector2( 4274.29, 430.322 )
 
-[node name="PathPlatform" type="Node2D" parent="Platforms"]
-position = Vector2( 3338.73, 1246.95 )
-script = ExtResource( 19 )
+[node name="Path2D2" parent="Platforms/PathPlatform3" index="0"]
+curve = SubResource( 7 )
 
-[node name="Path2D" type="Path2D" parent="Platforms/PathPlatform"]
-curve = SubResource( 3 )
+[node name="PathFollow2D" parent="Platforms/PathPlatform3/Path2D2" index="0"]
+position = Vector2( -19.2058, -22.5719 )
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Platforms/PathPlatform/Path2D"]
-position = Vector2( -0.278076, -1.88586 )
-rotate = false
-loop = false
+[editable path="Collectables/Health"]
 
-[node name="Platform" parent="Platforms/PathPlatform/Path2D/PathFollow2D" instance=ExtResource( 20 )]
+[editable path="Platforms/PathPlatform2"]
 
-[node name="InteractiveEnvironement" type="Node2D" parent="."]
-
-[node name="TallMushroom" type="Node2D" parent="InteractiveEnvironement" groups=[
-"spring",
-]]
-
-[node name="KinematicBody2D" type="KinematicBody2D" parent="InteractiveEnvironement/TallMushroom"]
-position = Vector2( 691.669, 1396.88 )
-
-[node name="Sprite" type="Sprite" parent="InteractiveEnvironement/TallMushroom/KinematicBody2D"]
-texture = ExtResource( 22 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractiveEnvironement/TallMushroom/KinematicBody2D"]
-position = Vector2( -0.970337, -1.93103 )
-shape = SubResource( 6 )
-
-[node name="Area2D" type="Area2D" parent="InteractiveEnvironement/TallMushroom/KinematicBody2D"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractiveEnvironement/TallMushroom/KinematicBody2D/Area2D"]
-position = Vector2( 0.445496, -5.34558 )
-shape = SubResource( 5 )
+[editable path="Platforms/PathPlatform3"]

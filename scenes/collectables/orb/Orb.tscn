@@ -23,11 +23,8 @@ tracks/0/keys = {
 [sub_resource type="CircleShape2D" id=2]
 radius = 13.0695
 
-[node name="Orb" type="Node2D" groups=[
+[node name="Collectable" type="Node2D" groups=[
 "collectable",
-"orb",
-"projectile",
-"weapon",
 ]]
 script = ExtResource( 2 )
 

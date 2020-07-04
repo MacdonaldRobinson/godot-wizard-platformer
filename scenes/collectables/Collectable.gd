@@ -3,6 +3,7 @@ extends Node2D
 onready var sprite_animation = $Sprite/AnimationPlayer
 
 var is_weapon_mode = false setget set_is_weapon_mode
+var group_name = "player"
 
 func _ready():
 	if(!is_weapon_mode):
@@ -11,7 +12,7 @@ func _ready():
 func _on_Area2D_area_entered(area):			
 	if(!is_weapon_mode):
 		var owner = area.get_owner()	
-		if owner != null && owner.is_in_group("player"):
+		if owner != null && owner.is_in_group(group_name):
 			queue_free()	
 
 func set_is_weapon_mode(new_val):
