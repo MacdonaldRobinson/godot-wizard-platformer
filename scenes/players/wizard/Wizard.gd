@@ -1,6 +1,7 @@
 extends Node2D
 
 onready var body:KinematicBody2D = $KinematicBody2D
+onready var body_collision:CollisionShape2D = $KinematicBody2D/CollisionShape2D
 onready var sprite:AnimatedSprite = $KinematicBody2D/AnimatedSprite
 onready var camera:Camera2D = $KinematicBody2D/Camera2D
 onready var saybox_container:ColorRect = $KinematicBody2D/SayBoxContainer
@@ -56,6 +57,30 @@ func _unhandled_input(event):
 	elif((Input.is_action_just_pressed("ui_attack2") || run_attack) && !is_attacking):
 		sprite.play("Attack2")
 		is_attacking = true		
+		
+		
+func _handle_collision_with_group_enemy(collider):
+	print("Handled collition with enemy")	
+	
+func _handle_collision_with_group_platform(collider):
+	print("Handled collition with platform")	
+	
+func _handle_collision_with_group_collectable(collider):
+	var owner = collider.get_owner()
+	if(owner.is_in_group("orb")):
+		owner.queue_free()
+	
+func detect_handle_collision():
+	for i in body.get_slide_count():
+		var collision = body.get_slide_collision(i)
+		if(collision.collider != null):
+			var owner = collision.collider.get_owner()
+			for group in owner.get_groups():
+				var func_name = "_handle_collision_with_group_"+group
+				print(func_name)
+				if(self.has_method(func_name)):
+					var call_function = funcref(self,func_name)
+					call_function.call_func(collision.collider)		
 
 var saybox_container_flip_h = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -93,7 +118,7 @@ func _physics_process(delta):
 			else:
 				projectile.position.x += 30					
 			
-	
+					
 	if(body.position.y > camera.limit_bottom):
 		Global.player_has_died = true
 		set_physics_process(false)
@@ -149,16 +174,16 @@ func _on_HitArea_area_entered(area):
 	if(owner.is_in_group("enemy") && !owner.is_dead):
 		print("enemy entered")
 		taking_damage = true
-	else:
-		if(owner.is_in_group("orb") && !owner.is_weapon_mode):
-			Global.orbs_collected += 1
+	elif(owner.is_in_group("orb") && !owner.is_weapon_mode):
+			Global.orbs_collected += 1	
+		
 
 
 func _on_HitArea_area_exited(area):
 	var owner = area.get_owner()
 	if(owner !=null && owner.is_in_group("enemy")):
 		print("enemy exited")
-		taking_damage = false
+		taking_damage = false	
 
 
 func _on_Timer_timeout():

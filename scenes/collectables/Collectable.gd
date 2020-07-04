@@ -8,7 +8,7 @@ func _ready():
 	if(!is_weapon_mode):
 		sprite_animation.play("UpDown")
 
-func _on_Area2D_area_entered(area):		
+func _on_Area2D_area_entered(area):			
 	if(!is_weapon_mode):
 		var owner = area.get_owner()	
 		if owner != null && owner.is_in_group("player"):

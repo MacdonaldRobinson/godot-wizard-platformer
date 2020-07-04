@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "PathPlatform",
 "language": "GDScript",
-"path": "res://scenes/levels/level1/platforms/PathPlatform.gd"
+"path": "res://scenes/reusable-scripts/platform/PathPlatform.gd"
 }, {
 "base": "Node2D",
 "class": "Platform",
 "language": "GDScript",
-"path": "res://scenes/platforms/Platform.gd"
+"path": "res://scenes/reusable-scripts/platform/Platform.gd"
 } ]
 _global_script_class_icons={
 "PathPlatform": "",
@@ -40,7 +40,7 @@ window/stretch/mode="2d"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "PathPlatform", "my_custom_node" )
+enabled=PoolStringArray(  )
 
 [input]
 
