@@ -71,52 +71,51 @@ func _physics_process(delta):
 	group_entered_path_platform_process()		
 
 func group_entered_path_platform(player_body, platform_body):		
-	print("group_entered_path_platform")	
-	player_body = group_body
+	print("group_entered_path_platform")
+	group_body = group_body
 	platform_body = platform_body
 	is_group_on_platform = true	
 			
-func group_entered_path_platform_process():		
-
-		if !is_resetting:		
-			if(!is_group_on_platform && only_move_when_group_enters):
-				can_move = false			
-			else:				
-				if(_get_is_end_of_path() && one_way):
-					can_move = false
-				else:
-					can_move = true
-		else:
-			can_move = true
-		
-		var current_offset = path_follow.get_offset()	
+func group_entered_path_platform_process():	
+	if !is_resetting:		
+		if(!is_group_on_platform && only_move_when_group_enters):
+			can_move = false			
+		else:				
+			if(_get_is_end_of_path() && one_way):
+				can_move = false
+			else:
+				can_move = true
+	else:
+		can_move = true
+	
+	var current_offset = path_follow.get_offset()	
+			
+	if can_move:
+		if(move_direction == DIRECTION.FORWARD):		
+			path_follow.set_offset(current_offset + platform_move_speed)
+		if(move_direction == DIRECTION.BACKWARD):
+			path_follow.set_offset(current_offset - platform_move_speed)	
 				
-		if can_move:
-			if(move_direction == DIRECTION.FORWARD):		
-				path_follow.set_offset(current_offset + platform_move_speed)
-			if(move_direction == DIRECTION.BACKWARD):
-				path_follow.set_offset(current_offset - platform_move_speed)	
-					
-		if(_get_is_start_of_path()):
-			move_direction = DIRECTION.FORWARD
-			is_resetting = false
-			set_physics_process(false)
-			pause_timer.start(0)
-		elif(_get_is_end_of_path()):
-			move_direction = DIRECTION.BACKWARD			
-			is_resetting = false	
-			set_physics_process(false)
-			pause_timer.start(0)
-		else:
-			if(reset_behaviour != RESET_BEHAVIOUR.NONE && !is_group_on_platform && only_move_when_group_enters):
-				if(!is_resetting):			
-					is_resetting = true					
-					match reset_behaviour:
-						RESET_BEHAVIOUR.START_OR_END:								
-							if(_get_current_unit_offset() > 0.5):
-								move_direction = DIRECTION.FORWARD
-							else:
-								move_direction = DIRECTION.BACKWARD
+	if(_get_is_start_of_path()):
+		move_direction = DIRECTION.FORWARD
+		is_resetting = false
+		set_physics_process(false)
+		pause_timer.start(0)
+	elif(_get_is_end_of_path()):
+		move_direction = DIRECTION.BACKWARD			
+		is_resetting = false	
+		set_physics_process(false)
+		pause_timer.start(0)
+	else:
+		if(reset_behaviour != RESET_BEHAVIOUR.NONE && !is_group_on_platform && only_move_when_group_enters):
+			if(!is_resetting):			
+				is_resetting = true					
+				match reset_behaviour:
+					RESET_BEHAVIOUR.START_OR_END:								
+						if(_get_current_unit_offset() > 0.5):
+							move_direction = DIRECTION.FORWARD
+						else:
+							move_direction = DIRECTION.BACKWARD
 							
 
 func group_exited_path_platform(player_body, platform_body):

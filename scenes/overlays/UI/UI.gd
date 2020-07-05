@@ -20,7 +20,7 @@ var is_down_button_down = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	orb_number.text = str(Global.orbs_collected)
+	orb_number.text = str(Global.get_store_item("orb"))
 	health_progress.value = Global.player_health
 	
 	if(is_left_button_down):

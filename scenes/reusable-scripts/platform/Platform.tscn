@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scenes/reusable-scripts/platform/Platform.gd" type="Script" id=1]
-[ext_resource path="res://scenes/levels/level1/Level1Tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://scenes/levels/level1/Level1Tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://scenes/reusable-scripts/platform/Platform.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 128.939, 26.8189 )
@@ -12,12 +12,12 @@ extents = Vector2( 128.123, 57.749 )
 [node name="Platform" type="Node2D" groups=[
 "platform",
 ]]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
 
 [node name="TileMap" type="TileMap" parent="KinematicBody2D"]
-tile_set = ExtResource( 2 )
+tile_set = ExtResource( 1 )
 format = 1
 tile_data = PoolIntArray( -2, 0, 5, -1, 0, 6, -65536, 0, 6, -65535, 0, 7 )
 

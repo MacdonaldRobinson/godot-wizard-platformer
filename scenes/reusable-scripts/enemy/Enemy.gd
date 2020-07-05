@@ -58,16 +58,17 @@ func _physics_process(delta):
 			stop_alert_timer.start(0)
 			current_speed = FOLLOW_SPEED
 		elif(ray.get_collider().get_owner().is_in_group("enemy")):
-			flip_direction()			
+			flip_direction()		
 			current_speed = WALK_SPEED
-			
+
 	if(!floor_check_ray.is_colliding() && !ray.is_colliding()):
 		flip_direction()				
-#
+
 	new_position.x = lerp(new_position.x, 0, 0.1)
 	new_position = body.move_and_slide_with_snap(new_position, snap, Vector2.UP)	
 	
 func flip_direction():
+	print("Ran flip")
 	var offset = 30		
 	ray.cast_to.x *= -1		
 	
@@ -75,18 +76,18 @@ func flip_direction():
 		direction = DIRECTION.RIGHT
 		sprite.flip_h = false
 		#sprite.position.x += offset
-		body_collision.position.x = sprite.position.x - offset
-		ray.position.x = sprite.position.x - offset
-		attack_area.position.x  = sprite.position.x	- offset
-		floor_check_ray.position.x = sprite.position.x + 150
+		body_collision.position.x = sprite.position.x
+		ray.position.x = sprite.position.x
+		attack_area.position.x  = sprite.position.x	
+		floor_check_ray.position.x = ray.cast_to.x  / 2
 	else:
 		direction = DIRECTION.LEFT
 		sprite.flip_h = true
 		#sprite.position.x -= offset
-		body_collision.position.x = sprite.position.x + offset
+		body_collision.position.x = sprite.position.x
 		ray.position.x = sprite.position.x + offset
-		attack_area.position.x  = sprite.position.x + offset
-		floor_check_ray.position.x = sprite.position.x - 150
+		attack_area.position.x  = sprite.position.x
+		floor_check_ray.position.x =  ray.cast_to.x  / 2
 
 func _on_FlipDirection_timeout():
 	flip_direction()
@@ -96,8 +97,7 @@ func _on_AttackArea_area_entered(area):
 	if(owner != null):
 		if(owner.is_in_group(attack_group_name)):
 			current_animation = "Attack"
-			set_alert()
-		print(owner)
+			set_alert()			
 		if(owner.get("is_weapon_mode") == true):
 			current_animation = "Hurt"
 			health_bar.value -=100
@@ -127,6 +127,6 @@ func _on_StopAlertTimer_timeout():
 func _on_AttackArea_area_exited(area):
 	var owner = area.get_owner()
 	if owner!= null:
-		if(owner.is_in_group(attack_group_name)):
-			flip_direction()
+		if(owner.is_in_group(attack_group_name)):			
 			set_alert()
+			flip_direction()

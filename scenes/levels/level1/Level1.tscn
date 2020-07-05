@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://scenes/levels/level1/tilemap/Level1TileMap_Red.tscn" type="PackedScene" id=1]
 [ext_resource path="res://backgrounds/parallax backgound pack/_09_distant_clouds1.png" type="Texture" id=2]
@@ -15,11 +15,14 @@
 [ext_resource path="res://scenes/players/wizard/Wizard.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/levels/level1/Level1.gd" type="Script" id=14]
 [ext_resource path="res://scenes/overlays/dead_scene/DeadScene.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/enemies/demon/Demon.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/enemies/dragon/Dragon.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/overlays/UI/UI.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/collectables/orb/Orb.tscn" type="PackedScene" id=18]
 [ext_resource path="res://textures/ui/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_12.png" type="Texture" id=19]
-[ext_resource path="res://scenes/levels/level1/platforms/PathPlatform.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scenes/reusable-scripts/platform/path-platform/PathPlatform.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scenes/enemies/demon/Demon.tscn" type="PackedScene" id=41]
+[ext_resource path="res://scenes/enemies/lizard/Lizard.tscn" type="PackedScene" id=45]
+[ext_resource path="res://scenes/enemies/medusa/Medusa.tscn" type="PackedScene" id=65]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -27,17 +30,18 @@ glow_enabled = true
 glow_blend_mode = 0
 glow_bicubic_upscale = true
 
-[sub_resource type="Curve2D" id=6]
+[sub_resource type="Curve2D" id=9]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, -10.3352, -17.4247, 0, 0, 0, 0, -17.4707, -871.275, 0, 0, 0, 0, -2086.69, -876.032 )
 }
 
-[sub_resource type="Curve2D" id=7]
+[sub_resource type="Curve2D" id=10]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, -19.2058, -22.5719, 0, 0, 0, 0, -31.9338, 690.192 )
 }
 
 [node name="Level1" type="Node2D"]
+position = Vector2( 1, 0 )
 script = ExtResource( 14 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -138,8 +142,17 @@ tile_data = PoolIntArray( 393228, 0, 65539, 393229, 0, 131078, 393230, 0, 131078
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="Demon" parent="Enemies" instance=ExtResource( 16 )]
-position = Vector2( 80.5981, 361.396 )
+[node name="Demon" parent="Enemies" instance=ExtResource( 41 )]
+position = Vector2( 104.271, 361.586 )
+
+[node name="Lizard" parent="Enemies" instance=ExtResource( 45 )]
+position = Vector2( 904.246, 121.445 )
+
+[node name="Medusa" parent="Enemies" instance=ExtResource( 65 )]
+position = Vector2( 1706.7, 1398.4 )
+
+[node name="Dragon" parent="Enemies" instance=ExtResource( 16 )]
+position = Vector2( 705.51, 1370.19 )
 
 [node name="Collectables" type="Node2D" parent="."]
 
@@ -172,16 +185,16 @@ position = Vector2( -1388.99, 142.705 )
 position = Vector2( 4795.16, 282.86 )
 
 [node name="Path2D2" parent="Platforms/PathPlatform2" index="0"]
-curve = SubResource( 6 )
+curve = SubResource( 9 )
 
 [node name="PathFollow2D" parent="Platforms/PathPlatform2/Path2D2" index="0"]
 position = Vector2( -10.3352, -17.4247 )
 
 [node name="PathPlatform3" parent="Platforms" instance=ExtResource( 21 )]
-position = Vector2( 4274.29, 430.322 )
+position = Vector2( 4346.97, 349.149 )
 
 [node name="Path2D2" parent="Platforms/PathPlatform3" index="0"]
-curve = SubResource( 7 )
+curve = SubResource( 10 )
 
 [node name="PathFollow2D" parent="Platforms/PathPlatform3/Path2D2" index="0"]
 position = Vector2( -19.2058, -22.5719 )

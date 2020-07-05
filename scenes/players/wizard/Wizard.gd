@@ -171,12 +171,18 @@ func _on_AnimatedSprite_animation_finished():
 
 func _on_HitArea_area_entered(area):	
 	var owner = area.get_owner()	
+	print("owner.name")
+	print(area.get_parent().get_parent().name)
 	if(owner.is_in_group("enemy") && !owner.is_dead):
 		print("enemy entered")
 		taking_damage = true
 	
-	if(owner.is_in_group("orb") && !owner.is_weapon_mode):
-			Global.orbs_collected += 100
+	if(owner.is_in_group("orb") && !owner.is_weapon_mode):		
+		var current_val = Global.get_store_item("orb")
+		current_val+=1
+		Global.set_store_item("orb", current_val)
+		
+		print(Global.get_store())			
 	
 	if(owner.is_in_group("health") && !owner.is_weapon_mode):
 			Global.player_health += 100
@@ -201,7 +207,7 @@ func _on_SayBoxContainer_visibility_changed():
 
 
 func _on_AnimatedSprite_frame_changed():
-	if(sprite.animation == "Attack1" && sprite.get_frame() == 5 && Global.orbs_collected > 0):
+	if(sprite.animation == "Attack1" && sprite.get_frame() == 5 && Global.get_store_item("orb") > 0):
 		projectile_is_flipped_h = sprite.flip_h
 		
 		var weapon_orb_scene_instance = load(weapon_orb_scene).instance()
@@ -216,6 +222,6 @@ func _on_AnimatedSprite_frame_changed():
 		weapon_orb_scene_instance.position.y -= 20
 		projectiles.append(weapon_orb_scene_instance)	
 		add_child(weapon_orb_scene_instance)
-			
-		Global.orbs_collected -=1
+		var current_val = Global.get_store_item("orb")
+		Global.set_store_item("orb", current_val -1)
 		

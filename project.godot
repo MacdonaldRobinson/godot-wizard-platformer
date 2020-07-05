@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "PathPlatform",
 "language": "GDScript",
-"path": "res://scenes/reusable-scripts/platform/PathPlatform.gd"
+"path": "res://scenes/reusable-scripts/platform/path-platform/PathPlatform.gd"
 }, {
 "base": "Node2D",
 "class": "Platform",
