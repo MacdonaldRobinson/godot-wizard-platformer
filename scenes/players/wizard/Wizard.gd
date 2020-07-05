@@ -104,7 +104,7 @@ func _physics_process(delta):
 	if taking_damage:
 		Global.player_health -= 1
 		
-	if Global.player_health <=0:
+	if Global.player_health<=0:
 		Global.player_has_died = true
 	
 	
@@ -171,21 +171,13 @@ func _on_AnimatedSprite_animation_finished():
 
 func _on_HitArea_area_entered(area):	
 	var owner = area.get_owner()	
-	print("owner.name")
 	print(area.get_parent().get_parent().name)
 	if(owner.is_in_group("enemy") && !owner.is_dead):
 		print("enemy entered")
 		taking_damage = true
 	
-	if(owner.is_in_group("orb") && !owner.is_weapon_mode):		
-		var current_val = Global.get_store_item("orb")
-		current_val+=1
-		Global.set_store_item("orb", current_val)
-		
-		print(Global.get_store())			
-	
 	if(owner.is_in_group("health") && !owner.is_weapon_mode):
-			Global.player_health += 100
+			Global.player_health += owner.get("amount")
 
 func _on_HitArea_area_exited(area):
 	var owner = area.get_owner()
@@ -222,6 +214,5 @@ func _on_AnimatedSprite_frame_changed():
 		weapon_orb_scene_instance.position.y -= 20
 		projectiles.append(weapon_orb_scene_instance)	
 		add_child(weapon_orb_scene_instance)
-		var current_val = Global.get_store_item("orb")
-		Global.set_store_item("orb", current_val -1)
+		Global.decrease_store_item_by("orb",1)
 		

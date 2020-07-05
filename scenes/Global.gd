@@ -22,6 +22,21 @@ func _ready():
 	
 func set_store_item(item_name:String, item_value:int):
 	_store[item_name] = item_value
+	print(_store)
+	
+func increase_store_item_by(item_name:String, increment_by:int):
+	var current_val = get_store_item(item_name)
+	var new_val = current_val+increment_by
+	set_store_item(item_name, new_val)
+	
+func decrease_store_item_by(item_name:String, increment_by:int):	
+	var current_val = get_store_item(item_name)
+	var new_val = current_val-increment_by
+	
+	if(new_val < 0):
+		new_val = 0	
+		
+	set_store_item(item_name, new_val)
 
 func get_store_item(item_name:String):
 	if(_store.has(item_name)):

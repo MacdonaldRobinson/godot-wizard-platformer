@@ -6,7 +6,7 @@ var path_follow:PathFollow2D
 var platform:Platform
 var pause_timer:Timer = Timer.new()
 
-export var group_name = "player"
+export var activate_for_group_name = "player"
 export var pause_time = 1
 export var platform_move_speed = 5
 export var one_way = true
@@ -14,7 +14,9 @@ export var only_move_when_group_enters = true
 
 enum RESET_BEHAVIOUR{
 	NONE,	
-	START_OR_END
+	START,
+	END
+	START_OR_END,	
 }
 
 export (RESET_BEHAVIOUR) var reset_behaviour = RESET_BEHAVIOUR.START_OR_END
@@ -40,7 +42,7 @@ func _ready():
 	add_child(pause_timer)
 
 	if(platform is Platform):		
-		platform.owner_group_name = group_name
+		platform.owner_group_name = activate_for_group_name
 		platform.body_entered_run_function = funcref(self, "group_entered_path_platform")
 		platform.body_exited_run_function = funcref(self, "group_exited_path_platform")	
 
@@ -111,7 +113,11 @@ func group_entered_path_platform_process():
 			if(!is_resetting):			
 				is_resetting = true					
 				match reset_behaviour:
-					RESET_BEHAVIOUR.START_OR_END:								
+					RESET_BEHAVIOUR.START:
+						move_direction = DIRECTION.BACKWARD
+					RESET_BEHAVIOUR.END:
+						move_direction = DIRECTION.FORWARD
+					RESET_BEHAVIOUR.START_OR_END:				
 						if(_get_current_unit_offset() > 0.5):
 							move_direction = DIRECTION.FORWARD
 						else:

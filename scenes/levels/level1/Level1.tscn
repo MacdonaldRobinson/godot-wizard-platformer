@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://scenes/levels/level1/tilemap/Level1TileMap_Red.tscn" type="PackedScene" id=1]
 [ext_resource path="res://backgrounds/parallax backgound pack/_09_distant_clouds1.png" type="Texture" id=2]
@@ -18,8 +18,10 @@
 [ext_resource path="res://scenes/enemies/dragon/Dragon.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/overlays/UI/UI.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/collectables/orb/Orb.tscn" type="PackedScene" id=18]
-[ext_resource path="res://textures/ui/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_12.png" type="Texture" id=19]
+[ext_resource path="res://scenes/collectables/health/Health.tscn" type="PackedScene" id=19]
+[ext_resource path="res://scenes/reusable-scripts/platform/Platform.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/reusable-scripts/platform/path-platform/PathPlatform.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scenes/reusable-scripts/platform/path-platform/PathPlatform.gd" type="Script" id=22]
 [ext_resource path="res://scenes/enemies/demon/Demon.tscn" type="PackedScene" id=41]
 [ext_resource path="res://scenes/enemies/lizard/Lizard.tscn" type="PackedScene" id=45]
 [ext_resource path="res://scenes/enemies/medusa/Medusa.tscn" type="PackedScene" id=65]
@@ -30,18 +32,13 @@ glow_enabled = true
 glow_blend_mode = 0
 glow_bicubic_upscale = true
 
-[sub_resource type="Curve2D" id=9]
+[sub_resource type="Curve2D" id=2]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, -10.3352, -17.4247, 0, 0, 0, 0, -17.4707, -871.275, 0, 0, 0, 0, -2086.69, -876.032 )
-}
-
-[sub_resource type="Curve2D" id=10]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, -19.2058, -22.5719, 0, 0, 0, 0, -31.9338, 690.192 )
+"points": PoolVector2Array( 0, 0, 0, 0, -5.30444, -10.8905, 0, 0, 0, 0, -48.3342, -395.067, 0, 0, 0, 0, -1556.92, -417.517 )
 }
 
 [node name="Level1" type="Node2D"]
-position = Vector2( 1, 0 )
+position = Vector2( -983.189, -58.7338 )
 script = ExtResource( 14 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -146,7 +143,7 @@ tile_data = PoolIntArray( 393228, 0, 65539, 393229, 0, 131078, 393230, 0, 131078
 position = Vector2( 104.271, 361.586 )
 
 [node name="Lizard" parent="Enemies" instance=ExtResource( 45 )]
-position = Vector2( 904.246, 121.445 )
+position = Vector2( 2187.01, 1378.83 )
 
 [node name="Medusa" parent="Enemies" instance=ExtResource( 65 )]
 position = Vector2( 1706.7, 1398.4 )
@@ -160,14 +157,11 @@ position = Vector2( 705.51, 1370.19 )
 "orb",
 ] instance=ExtResource( 18 )]
 position = Vector2( 1882.42, 378.18 )
+store_name = "orb"
+amount = 100
 
-[node name="Health" parent="Collectables" groups=[
-"health",
-] instance=ExtResource( 18 )]
-position = Vector2( 2003.12, 375.207 )
-
-[node name="Sprite" parent="Collectables/Health" index="0"]
-texture = ExtResource( 19 )
+[node name="Health" parent="Collectables" instance=ExtResource( 19 )]
+position = Vector2( 3128.98, 154.646 )
 
 [node name="Overlays" type="CanvasLayer" parent="."]
 
@@ -179,28 +173,23 @@ texture = ExtResource( 19 )
 visible = false
 
 [node name="Platforms" type="Node2D" parent="."]
-position = Vector2( -1388.99, 142.705 )
+position = Vector2( -1329.66, 146.943 )
 
-[node name="PathPlatform2" parent="Platforms" instance=ExtResource( 21 )]
-position = Vector2( 4795.16, 282.86 )
-
-[node name="Path2D2" parent="Platforms/PathPlatform2" index="0"]
-curve = SubResource( 9 )
-
-[node name="PathFollow2D" parent="Platforms/PathPlatform2/Path2D2" index="0"]
-position = Vector2( -10.3352, -17.4247 )
-
-[node name="PathPlatform3" parent="Platforms" instance=ExtResource( 21 )]
+[node name="PathPlatform1" parent="Platforms" instance=ExtResource( 21 )]
 position = Vector2( 4346.97, 349.149 )
+only_move_when_group_enters = false
 
-[node name="Path2D2" parent="Platforms/PathPlatform3" index="0"]
-curve = SubResource( 10 )
+[node name="PathPlatform" type="Node2D" parent="Platforms"]
+position = Vector2( 4795.16, 282.86 )
+script = ExtResource( 22 )
+one_way = false
 
-[node name="PathFollow2D" parent="Platforms/PathPlatform3/Path2D2" index="0"]
-position = Vector2( -19.2058, -22.5719 )
+[node name="Path2D2" type="Path2D" parent="Platforms/PathPlatform"]
+curve = SubResource( 2 )
 
-[editable path="Collectables/Health"]
+[node name="PathFollow2D" type="PathFollow2D" parent="Platforms/PathPlatform/Path2D2"]
+position = Vector2( -5.30444, -10.8905 )
+rotate = false
+loop = false
 
-[editable path="Platforms/PathPlatform2"]
-
-[editable path="Platforms/PathPlatform3"]
+[node name="Platform" parent="Platforms/PathPlatform/Path2D2/PathFollow2D" instance=ExtResource( 20 )]
