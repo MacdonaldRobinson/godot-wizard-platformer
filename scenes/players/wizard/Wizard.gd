@@ -10,17 +10,17 @@ onready var saybox_timer:Timer = $KinematicBody2D/SayBoxTimer
 onready var saybox_tween:Tween = $KinematicBody2D/SayBoxContainer/Tween
 onready var health_bar:TextureProgress = $KinematicBody2D/HealthBar
 onready var hit_area:Area2D = $KinematicBody2D/HitArea
-
+onready var shoot_sound = $KinematicBody2D/ShootSound
 onready var weapon_orb_scene = "res://scenes/collectables/orb/Orb.tscn";
 
-var SPEED = 100
-var MAX_SPEED = 500
+export var SPEED = 100
+export var MAX_SPEED = 200
 var new_position = Vector2(0, 0)
 var is_attacking = false
 var projectiles = []
 var projectile_is_flipped_h = false
 var taking_damage = false
-
+var _current_enemy_damage_per_attack = 1
 
 func say(text:String):
 	saybox.text = text	
@@ -76,8 +76,7 @@ func detect_handle_collision():
 		if(collision.collider != null):
 			var owner = collision.collider.get_owner()
 			for group in owner.get_groups():
-				var func_name = "_handle_collision_with_group_"+group
-				print(func_name)
+				var func_name = "_handle_collision_with_group_"+group				
 				if(self.has_method(func_name)):
 					var call_function = funcref(self,func_name)
 					call_function.call_func(collision.collider)		
@@ -102,7 +101,7 @@ func _physics_process(delta):
 		say(Global.player_saybox_text)
 
 	if taking_damage:
-		Global.player_health -= 1
+		Global.player_health -= _current_enemy_damage_per_attack
 		
 	if Global.player_health<=0:
 		Global.player_has_died = true
@@ -161,39 +160,38 @@ func _physics_process(delta):
 		else:
 			sprite.play("Fall")	
 			
+#	if body.is_on_floor():
+#		body.rotation = body.get_floor_normal().angle() + PI/2
+		
 	new_position.x = lerp(new_position.x, 0, 0.1) 		
 	new_position = body.move_and_slide_with_snap(new_position, snap, Vector2.UP)	
-
+				
 
 func _on_AnimatedSprite_animation_finished():
 	is_attacking = false
 
 
 func _on_HitArea_area_entered(area):	
-	var owner = area.get_owner()	
-	print(area.get_parent().get_parent().name)
-	if(owner.is_in_group("enemy") && !owner.is_dead):
-		print("enemy entered")
+	var owner = area.get_owner()		
+	if(owner.is_in_group("enemy") && !owner.is_dead):		
 		taking_damage = true
+		_current_enemy_damage_per_attack = owner.damage_per_attack
 	
 	if(owner.is_in_group("health") && !owner.is_weapon_mode):
 			Global.player_health += owner.get("amount")
 
 func _on_HitArea_area_exited(area):
 	var owner = area.get_owner()
-	if(owner !=null && owner.is_in_group("enemy")):
-		print("enemy exited")
+	if(owner !=null && owner.is_in_group("enemy")):		
 		taking_damage = false	
 
 
 func _on_Timer_timeout():
-	print("Ran timer")
 	saybox_container.hide()
 	saybox_timer.stop()
 
 
 func _on_SayBoxContainer_visibility_changed():
-	print("visibility changed")
 	if(saybox_container.visible):
 		saybox_timer.start()
 
@@ -201,6 +199,7 @@ func _on_SayBoxContainer_visibility_changed():
 func _on_AnimatedSprite_frame_changed():
 	if(sprite.animation == "Attack1" && sprite.get_frame() == 5 && Global.get_store_item("orb") > 0):
 		projectile_is_flipped_h = sprite.flip_h
+		shoot_sound.play(0)
 		
 		var weapon_orb_scene_instance = load(weapon_orb_scene).instance()
 		weapon_orb_scene_instance.is_weapon_mode = true

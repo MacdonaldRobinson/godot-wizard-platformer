@@ -18,11 +18,6 @@ func _ready():
 				if(area_test is Area2D):
 					hit_area = area_test	
 					
-					
-	print(platform_body)
-	print(hit_area)
-	
-	
 	hit_area.disconnect("body_entered", self, "_on_HitArea_body_entered")
 	hit_area.disconnect("body_exited", self, "_on_HitArea_body_exited")
 					
@@ -31,10 +26,10 @@ func _ready():
 		
 
 func group_entered(group_body, platform_body):		
-	print("group_exited")
+	pass
 	
 func group_exited(group_body, platform_body):
-	print("group_exited")
+	pass
 
 func _on_HitArea_body_entered(body):	
 	if body != null:

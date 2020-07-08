@@ -43,7 +43,6 @@ func _on_SayBox_text_entered(new_text):
 	
 	
 func _on_ResetTimer_timeout():
-	print("Ran reset timer")
 	attack1_button.pressed = false
 	attack1_button.toggle_mode = false	
 	reset_timer.stop()

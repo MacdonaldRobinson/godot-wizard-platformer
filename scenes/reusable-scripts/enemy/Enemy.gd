@@ -1,6 +1,7 @@
 extends Node2D
 
 onready var body = $KinematicBody2D
+onready var effects = $KinematicBody2D/Effects
 onready var sprite = $KinematicBody2D/AnimatedSprite
 onready var ray = $KinematicBody2D/RayCast2D
 onready var body_collision = $KinematicBody2D/BodyCollision
@@ -19,13 +20,16 @@ enum DIRECTION{
 	RIGHT
 }
 
-var WALK_SPEED = 20
-var FOLLOW_SPEED = 100
+export var WALK_SPEED = 50
+export var FOLLOW_SPEED = 100
+export var damage_per_attack = 1
 
 var current_speed = WALK_SPEED
 var current_animation = "Walk"
 var new_position = Vector2(0, 0)
 var direction = DIRECTION.RIGHT
+
+export var run_effect_at_frame = 2
 
 var is_dead = false
 var attack_group_name = "player"
@@ -54,23 +58,40 @@ func _physics_process(delta):
 			new_position.x += current_speed
 		
 	if(ray.is_colliding()):
-		if(ray.get_collider().get_owner().is_in_group(attack_group_name)):	
+		var collider = ray.get_collider()
+		var owner = collider.get_owner();
+		if(owner.is_in_group(attack_group_name)):	
 			stop_alert_timer.start(0)
-			current_speed = FOLLOW_SPEED
+			current_speed = FOLLOW_SPEED			
 		elif(ray.get_collider().get_owner().is_in_group("enemy")):
 			flip_direction()		
 			current_speed = WALK_SPEED
 
 	if(!floor_check_ray.is_colliding() && !ray.is_colliding()):
-		flip_direction()				
+		flip_direction()
 
 	new_position.x = lerp(new_position.x, 0, 0.1)
 	new_position = body.move_and_slide_with_snap(new_position, snap, Vector2.UP)	
 	
+func flip_all(node):
+	if(node.get("flip_h") != null):
+		node.flip_h = !node.flip_h
+		
+	if(node.get("position") != null):
+		node.position *= -1	
+		
+	if(node.get("cast_to") != null):
+		node.cast_to *= -1
+		
+	for child_node in node.get_children():
+		flip_all(child_node)
+	
 func flip_direction():
-	print("Ran flip")
 	var offset = 30		
-	ray.cast_to.x *= -1		
+	ray.cast_to.x *= -1	
+		
+	if(effects != null):
+		effects.position *= -1
 	
 	if(direction == DIRECTION.LEFT):		
 		direction = DIRECTION.RIGHT
@@ -79,7 +100,10 @@ func flip_direction():
 		body_collision.position.x = sprite.position.x
 		ray.position.x = sprite.position.x
 		attack_area.position.x  = sprite.position.x	
-		floor_check_ray.position.x = ray.cast_to.x  / 2
+		floor_check_ray.position.x = ray.cast_to.x  / 2				
+		
+		if(effects != null):
+			effects.position.x = sprite.position.x + 100
 	else:
 		direction = DIRECTION.LEFT
 		sprite.flip_h = true
@@ -88,9 +112,16 @@ func flip_direction():
 		ray.position.x = sprite.position.x + offset
 		attack_area.position.x  = sprite.position.x
 		floor_check_ray.position.x =  ray.cast_to.x  / 2
-
+		
+		if(effects != null):
+			effects.position.x = sprite.position.x - 100
+		
+	if(effects != null):
+		effects.flip_h = sprite.flip_h
+	
 func _on_FlipDirection_timeout():
 	flip_direction()
+	pass
 	
 func _on_AttackArea_area_entered(area):
 	var owner = area.get_owner()
@@ -130,3 +161,14 @@ func _on_AttackArea_area_exited(area):
 		if(owner.is_in_group(attack_group_name)):			
 			set_alert()
 			flip_direction()
+
+func _on_AnimatedSprite_frame_changed():
+	var effect_name = self.name + "_" + sprite.animation	
+	print(effects.frames.has_animation(effect_name))
+	if(sprite.frame == run_effect_at_frame && effects.frames.has_animation(effect_name)):
+		effects.show()
+		effects.set_frame(1)
+		effects.play(effect_name)
+
+func _on_Effects_animation_finished():
+	effects.hide()

@@ -72,8 +72,7 @@ func _get_current_unit_offset():
 func _physics_process(delta):	
 	group_entered_path_platform_process()		
 
-func group_entered_path_platform(player_body, platform_body):		
-	print("group_entered_path_platform")
+func group_entered_path_platform(player_body, platform_body):
 	group_body = group_body
 	platform_body = platform_body
 	is_group_on_platform = true	
@@ -125,7 +124,6 @@ func group_entered_path_platform_process():
 							
 
 func group_exited_path_platform(player_body, platform_body):
-	print("group_exited_path_platform")
 	is_group_on_platform = false	
 
 

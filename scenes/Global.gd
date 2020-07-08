@@ -55,7 +55,6 @@ func set_player_has_died(new_val):
 	
 	if(player_has_died):
 		get_tree().paused = true
-		print("Ran set_player_has_died")
 		
 		if(death_scene != null):
 			death_scene.show()

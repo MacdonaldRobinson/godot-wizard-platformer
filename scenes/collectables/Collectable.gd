@@ -2,6 +2,8 @@ extends Node2D
 
 onready var sprite_animation = $Sprite/AnimationPlayer
 onready var amount_label = $Sprite/Amount
+onready var collected_audio:AudioStreamPlayer2D = $Sprite/CollectedAudio
+
 
 export var store_name = "collectable"
 export var show_labels = true
@@ -25,7 +27,7 @@ func _on_Area2D_area_entered(area):
 	if(!is_weapon_mode):
 		var owner = area.get_owner()	
 		if owner != null && owner.is_in_group(collector_group_name):
-			Global.increase_store_item_by(store_name, amount)			
+			Global.increase_store_item_by(store_name, amount)
 			queue_free()	
 
 func set_is_weapon_mode(new_val):
@@ -35,3 +37,7 @@ func set_is_weapon_mode(new_val):
 func _on_VisibilityNotifier2D_screen_exited():
 	if(is_weapon_mode):
 		queue_free()
+
+
+func _on_CollectedAudio_finished():
+	queue_free()

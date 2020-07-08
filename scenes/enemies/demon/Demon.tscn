@@ -24,7 +24,6 @@ modulate = Color( 1, 1, 1, 0.984314 )
 position = Vector2( 32.443, -14.8041 )
 frames = ExtResource( 1 )
 animation = "Idle"
-frame = 2
 playing = true
 
 [node name="RayCast2D" type="RayCast2D" parent="KinematicBody2D"]
