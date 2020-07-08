@@ -12,9 +12,6 @@ onready var death_timer = $KinematicBody2D/DeathTimer
 onready var death_tween = $KinematicBody2D/DeathTween
 onready var stop_alert_timer = $KinematicBody2D/StopAlertTimer
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
 enum DIRECTION{
 	LEFT,
 	RIGHT
@@ -23,6 +20,8 @@ enum DIRECTION{
 export var WALK_SPEED = 50
 export var FOLLOW_SPEED = 100
 export var damage_per_attack = 1
+export var initial_health_value = 100
+export var max_health_value = 100
 
 var current_speed = WALK_SPEED
 var current_animation = "Walk"
@@ -33,6 +32,10 @@ export var run_effect_at_frame = 2
 
 var is_dead = false
 var attack_group_name = "player"
+
+func _ready():
+	health_bar.max_value = max_health_value
+	health_bar.value = initial_health_value
 
 func set_alert():
 	print("set alert")
@@ -129,9 +132,9 @@ func _on_AttackArea_area_entered(area):
 		if(owner.is_in_group(attack_group_name)):
 			current_animation = "Attack"
 			set_alert()			
-		if(owner.get("is_weapon_mode") == true):
+		if(owner.get("is_weapon_mode") == true):			
 			current_animation = "Hurt"
-			health_bar.value -=100
+			health_bar.value -= owner.get("attack_damage")			
 
 		
 func _on_AnimatedSprite_animation_finished():

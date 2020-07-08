@@ -142,6 +142,9 @@ tile_data = PoolIntArray( 393228, 0, 65539, 393229, 0, 131078, 393230, 0, 131078
 
 [node name="Dragon" parent="Enemies" instance=ExtResource( 16 )]
 position = Vector2( 1209.14, 1355.47 )
+scale = Vector2( 2, 2 )
+initial_health_value = 300
+max_health_value = 300
 
 [node name="Demon" parent="Enemies" instance=ExtResource( 41 )]
 position = Vector2( 206.922, 361.519 )
@@ -194,10 +197,10 @@ visible = false
 position = Vector2( -1329.66, 146.943 )
 
 [node name="PathPlatform1" parent="Platforms" instance=ExtResource( 21 )]
-position = Vector2( 4346.97, 349.149 )
+position = Vector2( 4190.97, 349.149 )
 
 [node name="PathPlatform" type="Node2D" parent="Platforms"]
-position = Vector2( 4734.84, 266.986 )
+position = Vector2( 4572.84, 240.986 )
 script = ExtResource( 22 )
 one_way = false
 

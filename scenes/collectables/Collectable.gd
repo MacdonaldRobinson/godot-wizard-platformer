@@ -10,6 +10,7 @@ export var show_labels = true
 export var amount = 1
 export var before_label = "+"
 export var after_label = ""
+export var attack_damage = 100
 
 var is_weapon_mode = false setget set_is_weapon_mode
 var collector_group_name = "player"
